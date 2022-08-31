@@ -5,12 +5,19 @@ using System.Globalization;
 
 namespace ConsoleBanking
 {
+    /// <summary>
+    /// Enum <c>AccountType</c> Shows a list of the  Account Types available to the User.
+    /// </summary>
     enum AccountType
     {
         Savings,
         Current,
         Checking
     }
+
+
+    delegate void TrasnactionDelegate(string description, decimal amount);
+
 
     /// <summary>
     ///  Class <c>Account</c> Models basic customer information
@@ -56,6 +63,9 @@ namespace ConsoleBanking
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static decimal Balance
         {
             get
@@ -77,6 +87,11 @@ namespace ConsoleBanking
             }
         }
 
+
+        /// <summary>
+        /// Account opening form.
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
         public void AccountCreationForm()
         {
             Console.WriteLine("Fill in the following details.");
@@ -175,28 +190,35 @@ namespace ConsoleBanking
             Console.WriteLine($"Available Balance\t:{Balance.ToString("C", CultureInfo.CurrentUICulture)}");
         }
 
+
+
         /// <summary>
-        /// 
+        /// Validates input when  either Opening an account, making a  Deposit or Withdrawal 
         /// </summary>
-        /// <param name="amount"></param>
-        /// <param name="value"></param>
-        /// <param name="literal"></param>
-        public void ValidateTransactionInput(string amount, out decimal value, string literal = "")
+        /// <param name="valueEntered">Amount in string</param>
+        /// <param name="amount">Actual Transaction amount</param>
+        /// <param name="literalValue">String literal value</param>
+        public void ValidateTransactionInput(string valueEntered, out decimal amount, string literalValue = "")
         {
-            while (!decimal.TryParse(amount, out value))
+            while (!decimal.TryParse(valueEntered, out amount))
             {
                 Console.Clear();
                 Console.WriteLine("Wrong Input!\nRe-Enter Amount.");
                 Thread.Sleep(1500);
 
                 Console.Clear();
-                Console.Write(literal);
+                Console.Write(literalValue);
 
-                amount = Console.ReadLine();
+                valueEntered = Console.ReadLine();
             }
         }
 
-        public void TransactionType()
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void TransactionType(Transactions method)
         {
             Transactions.WaitWindow();
 
@@ -206,7 +228,7 @@ namespace ConsoleBanking
             Console.Write("Amount:  $");
             string amount = Console.ReadLine();
 
-            ValidateTransactionInput(amount, out decimal depositAmount, "Amount:  $");
+            ValidateTransactionInput(amount, out decimal depositAmount, "Amount:  $");       
 
             Transactions.MakeDeposit(description, depositAmount);
 
