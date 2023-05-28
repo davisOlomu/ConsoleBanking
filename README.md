@@ -1,2 +1,2 @@
 A console application written in the C# language. The application is connected to a MSQ SQL Server database.
-First time user's would have to open an account, filling in minor information and creating Login Access. These information are saved on the database. Existing user's can Log in with their credentials and can perform basic banking operations eg Withdraw, Deposit, Check Account Balance, Check User details and Transaction History.
+First time user's would have to open an account, filling in minor information and creating Login Access. These information are saved on the database. Existing user's can Login with their credentials and can perform basic banking operations eg Withdraw, Deposit, Check Account Balance, Check User details and Transaction History.
