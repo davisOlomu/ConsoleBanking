@@ -47,7 +47,7 @@ namespace ConsoleBanking
             newCustomer.CreateTransaction(initialdeposit, username);
 
             Console.Clear();
-            Designs.CenterNewLine("Account sucessfully created.\n\n");
+            Designs.CenterTextNewLine("Account sucessfully created.\n\n");
 
             Thread.Sleep(6000);
             Console.Clear();

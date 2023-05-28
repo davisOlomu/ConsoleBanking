@@ -19,9 +19,12 @@ namespace ConsoleBanking
         // SignUp!(new app user)
         public static void CreateNewAccount()
         {
-            Console.WriteLine("Fill in the following details.");
-            Console.WriteLine("Press Enter Key after each field.\n\n");
+            Designs.CenterTextNewLine("Fill in the following details.");
+            Designs.CenterTextNewLine("Press Enter Key after each field.\n\n");
+            Thread.Sleep(3000);
+            Console.Clear();
 
+            Console.WriteLine("Personal details: \n\n");
             Console.Write("Firstname: ");
             firstname = Console.ReadLine();
 
@@ -30,7 +33,9 @@ namespace ConsoleBanking
 
             Console.Write("Email: ");
             email = Console.ReadLine();
+            Console.Clear();
 
+            Console.WriteLine("Security: \n\n");
             Console.Write("UserName: ");
             username = ValidateUsername();      
 
@@ -53,10 +58,14 @@ namespace ConsoleBanking
                     Console.Clear();
                 }             
             }
-            Console.WriteLine("\n");             
+            Console.Clear();
 
+
+            Console.WriteLine("Account details: \n\n ");
             accountType = ValidateAccoutType();
             initialDeposit = ValidateInitialDeposit();
+
+
 
             Account.CreateAccount();
         }

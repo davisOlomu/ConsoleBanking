@@ -5,14 +5,14 @@ namespace ConsoleBanking
     public  class Designs
     {
         // Center with acarriage return
-        public static void CenterNewLine(string message)
+        public static void CenterTextNewLine(string message)
         {
             int spaces = 50 + (message.Length / 2);
             Console.WriteLine(message.PadLeft(spaces));      
         }
 
         // Center without carriage return
-        public static void CenterSameLine(string message)
+        public static void CenterTextSameLine(string message)
         {
             int spaces = 50 + (message.Length / 2);
             Console.Write(message.PadLeft(spaces));

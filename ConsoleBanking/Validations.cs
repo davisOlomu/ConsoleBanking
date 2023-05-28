@@ -13,19 +13,20 @@ namespace ConsoleBanking
         {
             if (!int.TryParse(Console.ReadLine(), out int pin))
             {
-                //Designs.CenterNewLine("Invalid pin format");
-                //Designs.CenterNewLine("Re-Enter Pin");
+                Designs.CenterTextNewLine("Invalid pin format");
+                Designs.CenterTextNewLine("Re-Enter Pin");
 
-                //ValidatePin();
-                throw new InvalidPinException("Invalid pin format");
+                ValidatePin();
+
+                //  throw new InvalidPinException("Invalid pin format");
             }
             else
             {
                 // Check if Pin already exist
                 while (dbAccess.VerifyPin(pin))
                 {
-                    Designs.CenterNewLine("Pin already exist.");
-                    Designs.CenterNewLine("Re-Enter Pin");
+                    Designs.CenterTextNewLine("Pin already exist.");
+                    Designs.CenterTextNewLine("Re-Enter Pin");
 
                     pin = int.Parse(Console.ReadLine());
                     dbAccess.VerifyPin(pin);
@@ -43,8 +44,8 @@ namespace ConsoleBanking
             // Check if username already exist
             while (dbAccess.VerifyUserName(username))
             {
-                Designs.CenterNewLine("Username already exist.");
-                Designs.CenterNewLine("Re-Enter Username");
+                Designs.CenterTextNewLine("Username already exist.");
+                Designs.CenterTextNewLine("Re-Enter Username");
 
                 username = Console.ReadLine();
 
@@ -98,18 +99,25 @@ namespace ConsoleBanking
         // Validate Initial deposit
         public static decimal ValidateInitialDeposit()
         {
-            Console.Write("\nOpening amount: $");
-
-            if (!decimal.TryParse(Console.ReadLine(), out decimal initialDeposit))
+    
+            decimal initialDeposit = new decimal();
+            void deposit()
             {
-                Designs.CenterNewLine("Wrong Input! ");
-                Designs.CenterNewLine("Re-Enter Amount ");
+                Console.Write("\nOpening amount: $");
 
-                Thread.Sleep(2000);
-                Console.Clear();
+                if (!decimal.TryParse(Console.ReadLine(), out initialDeposit))
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Wrong Input! ");
+                    Designs.CenterTextNewLine("Re-Enter Amount ");
 
-                ValidateInitialDeposit();
+                    Thread.Sleep(2000);
+                    Console.Clear();
+
+                    deposit();
+                }
             }
+            deposit();
             return initialDeposit;
         }
     }

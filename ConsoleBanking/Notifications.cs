@@ -9,7 +9,7 @@ namespace ConsoleBanking
         public static void TransactionSucess()
         {
             Console.Clear();
-            Designs.CenterNewLine("Transaction Sucessful!");
+            Designs.CenterTextNewLine("Transaction Sucessful!");
 
             Thread.Sleep(1000);
             Console.Clear();
@@ -17,7 +17,7 @@ namespace ConsoleBanking
         public static void TransactionFailed()
         {
             Console.Clear();
-            Designs.CenterNewLine("Transaction Unsucessful!");
+            Designs.CenterTextNewLine("Transaction Unsucessful!");
 
             Thread.Sleep(1000);
             Console.Clear();
@@ -25,7 +25,7 @@ namespace ConsoleBanking
         public static void WaitWindow()
         {
             Console.Clear();
-            Designs.CenterNewLine("Please Wait");
+            Designs.CenterTextNewLine("Please Wait");
 
             Thread.Sleep(1500);
             Console.Clear();
