@@ -11,7 +11,7 @@ namespace ConsoleBanking
     public class Transactions
     {
         // Sign Up
-        public static void OpenNewAccount()
+        public static void OpenAccount()
         {
             AccountInfo newUserAccount= new AccountInfo();
             AccountInfo.CreateNewAccount();
@@ -20,7 +20,7 @@ namespace ConsoleBanking
         // Retrieve balance
         public static void CheckAccountBalance()
         {
-            Designs.CenterNewLine("\n\n\n\n");
+            Designs.CenterTextNewLine("\n\n\n\n");
         
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
@@ -40,7 +40,7 @@ namespace ConsoleBanking
         // Withdraw
         public static void MakeWithdrawal()
         {
-            Designs.CenterNewLine("\n\n\n\n");
+            Designs.CenterTextNewLine("\n\n\n\n");
   
             // Read From Db
             if (dbAccess.ReadFromCustomerWithUsername(user))
@@ -59,7 +59,7 @@ namespace ConsoleBanking
                     if (amount > user.Balance)
                     {
                         Notifications.WaitWindow();
-                        Designs.CenterNewLine("Insufficient funds!\n");
+                        Designs.CenterTextNewLine("Insufficient funds!\n");
 
                         Thread.Sleep(2000);
                         Console.Clear();
@@ -73,7 +73,7 @@ namespace ConsoleBanking
                     else if (amount <= 0)
                     {
                         Notifications.WaitWindow();
-                        Designs.CenterNewLine("Withdraw amount must be positive.\n");
+                        Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
 
                         Thread.Sleep(2000);
                         Console.Clear();
@@ -98,7 +98,7 @@ namespace ConsoleBanking
                     // Log this transaction in Db
                     dbAccess.CreateTransaction(withdraw, user.UserName);
 
-                    Console.WriteLine(Receipt.TransactionReceipt(withdraw) + "\n\n");
+                    Console.WriteLine(TransactionReceipt.Receipt(withdraw) + "\n\n");
 
                     Designs.DrawLine();
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -108,9 +108,9 @@ namespace ConsoleBanking
                 else
                 {
                     Console.Clear();
-                    Designs.CenterNewLine("Wrong Input!");
+                    Designs.CenterTextNewLine("Wrong Input!");
 
-                    Designs.CenterNewLine("Enter a valid Amount");
+                    Designs.CenterTextNewLine("Enter a valid Amount");
                     Thread.Sleep(1500);
 
                     MakeWithdrawal();
@@ -122,7 +122,7 @@ namespace ConsoleBanking
         // Deposit
         public static void MakeDeposit()
         {
-            Designs.CenterNewLine("\n\n\n\n");
+            Designs.CenterTextNewLine("\n\n\n\n");
 
             // Read From Db
             if (dbAccess.ReadFromCustomerWithUsername(user))
@@ -143,7 +143,7 @@ namespace ConsoleBanking
                         Console.Clear();
 
                         Notifications.WaitWindow();
-                        Designs.CenterNewLine("Amount of deposit must be positive.\n");
+                        Designs.CenterTextNewLine("Amount of deposit must be positive.\n");
 
                         Thread.Sleep(2000);
                         Console.Clear();
@@ -168,7 +168,7 @@ namespace ConsoleBanking
                     // Log this transaction in Db
                     dbAccess.CreateTransaction(deposit, user.UserName);
 
-                    Console.WriteLine(Receipt.TransactionReceipt(deposit) + "\n\n");
+                    Console.WriteLine(TransactionReceipt.Receipt(deposit) + "\n\n");
 
                     Designs.DrawLine();
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -178,9 +178,9 @@ namespace ConsoleBanking
                 else
                 {
                     Console.Clear();
-                    Designs.CenterNewLine("Wrong Input!");
+                    Designs.CenterTextNewLine("Wrong Input!");
 
-                    Designs.CenterNewLine("Enter a valid Amount");
+                    Designs.CenterTextNewLine("Enter a valid Amount");
                     Thread.Sleep(1500);
 
                     MakeDeposit();
@@ -192,7 +192,7 @@ namespace ConsoleBanking
         // Get Account info.
         public static void ViewAccountDetails()
         {
-            Designs.CenterNewLine("\n\n\n\n");           
+            Designs.CenterTextNewLine("\n\n\n\n");           
 
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
@@ -209,9 +209,9 @@ namespace ConsoleBanking
 
 
         // Get all transactions as table.
-        public static void ViewAllTransactions()
+        public static void ViewTransactionHistory()
         {
-            Designs.CenterNewLine("\n\n\n\n");
+            Designs.CenterTextNewLine("\n\n\n\n");
            
             Notifications.WaitWindow();
 

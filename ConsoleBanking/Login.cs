@@ -15,8 +15,8 @@ namespace ConsoleBanking
         {
             Console.ForegroundColor = ConsoleColor.White;
 
-            Designs.CenterNewLine("\n\n");
-            Designs.CenterSameLine("Username: ");
+            Designs.CenterTextNewLine("\n\n");
+            Designs.CenterTextSameLine("Username: ");
 
             user.UserName = Console.ReadLine();
 
@@ -24,7 +24,7 @@ namespace ConsoleBanking
             {
                 if (dbAccess.ReadFromCustomerWithUsername(user))
                 {
-                    Designs.CenterSameLine("Password: ");
+                    Designs.CenterTextSameLine("Password: ");
                     string password = Console.ReadLine();
 
                     Thread.Sleep(6000);
@@ -38,7 +38,7 @@ namespace ConsoleBanking
                     else
                     {
                         Console.Clear();
-                        Designs.CenterNewLine("Incorrect password!");
+                        Designs.CenterTextNewLine("Incorrect password!");
 
                         Thread.Sleep(5000);
                         Console.Clear();
@@ -49,7 +49,7 @@ namespace ConsoleBanking
                 else
                 {
                     Console.Clear();
-                    Designs.CenterNewLine("Username not found! ");
+                    Designs.CenterTextNewLine("Username not found! ");
 
                     Thread.Sleep(5000);
                     Console.Clear();
@@ -60,7 +60,7 @@ namespace ConsoleBanking
             catch (SqlException e)
             {
                 Console.Clear();
-                Designs.CenterNewLine(e.Message);
+                Designs.CenterTextNewLine(e.Message);
 
                 Thread.Sleep(5000);
                 Console.Clear();

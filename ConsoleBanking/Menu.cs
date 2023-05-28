@@ -8,13 +8,13 @@ namespace ConsoleBanking
 	     // Transaction page
 		public static void MainMenu()
 		{
-			Designs.CenterNewLine("\n\n\n\n");
+			Designs.CenterTextNewLine("\n\n\n\n");
 			Console.BackgroundColor = ConsoleColor.DarkMagenta;
 			Designs.DrawLine();
 
 			Console.WriteLine($"{Designs.AlignText(0, "")}");
 			Console.WriteLine($"{Designs.AlignText(37, "1. Withdraw ")}");
-			Console.WriteLine($"{Designs.AlignText(37, "2. Deposit M")}");
+			Console.WriteLine($"{Designs.AlignText(37, "2. Deposit ")}");
 			Console.WriteLine($"{Designs.AlignText(37, "3. Account Balance")}");
 			Console.WriteLine($"{Designs.AlignText(37, "4. Account Details")}");
 			Console.WriteLine($"{Designs.AlignText(37, "5. Transaction History")}");
@@ -46,7 +46,7 @@ namespace ConsoleBanking
 
 				
 				case ConsoleKey.NumPad5:
-					Transactions.ViewAllTransactions();
+					Transactions.ViewTransactionHistory();
                     Console.WriteLine();
 					ReturnToMenu();
 					break;
@@ -57,7 +57,7 @@ namespace ConsoleBanking
 					break;
 
 				default:
-					Designs.CenterNewLine("Wrong Input! \n");
+					Designs.CenterTextNewLine("Wrong Input! \n");
 					Thread.Sleep(1500);
 
 					Console.Clear();
@@ -69,7 +69,7 @@ namespace ConsoleBanking
 		// Home page
 		public static void HomeMenu()
 		{
-			Designs.CenterNewLine("Welcome...\n\n\n\n");
+			Designs.CenterTextNewLine("Welcome...\n\n\n\n");
 			Console.BackgroundColor = ConsoleColor.DarkMagenta;	
 			Designs.DrawLine();
 				
@@ -97,7 +97,7 @@ namespace ConsoleBanking
 
 				case ConsoleKey.NumPad2:
 					Console.Clear();
-					Transactions.OpenNewAccount();
+					Transactions.OpenAccount();
 					break;
 
 				case ConsoleKey.NumPad3:
@@ -106,13 +106,13 @@ namespace ConsoleBanking
 
 				case ConsoleKey.NumPad4:
 					Console.Clear();
-					Designs.CenterNewLine("Thank you for Banking with us.");
+					Designs.CenterTextNewLine("Thank you for Banking with us.");
 
 					Environment.Exit(0);
 					break;
 
 				default:
-					Designs.CenterNewLine("Wrong Input!");
+					Designs.CenterTextNewLine("Wrong Input!");
 					Thread.Sleep(1500);
 
 					Console.Clear();
@@ -137,7 +137,7 @@ namespace ConsoleBanking
 			else
 			{
 				Console.Clear();
-				Designs.CenterNewLine("Wrong Input!");
+				Designs.CenterTextNewLine("Wrong Input!");
 
 				HomeMenu();
 			}

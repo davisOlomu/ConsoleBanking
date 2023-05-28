@@ -6,10 +6,10 @@ using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
 {
-    public class Receipt
+    public class TransactionReceipt
     {
         // View transaction details
-        public static string TransactionReceipt(TransactionModel model)
+        public static string Receipt(TransactionModel model)
         {
             StringBuilder transReceipt = new StringBuilder();
 
