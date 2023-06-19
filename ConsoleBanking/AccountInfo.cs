@@ -6,7 +6,7 @@ using static ConsoleBanking.Validations;
 namespace ConsoleBanking
 {
     public class AccountInfo
-    {  
+    {
         public static string firstname;
         public static string lastname;
         public static string email;
@@ -37,35 +37,37 @@ namespace ConsoleBanking
 
             Console.WriteLine("Security: \n\n");
             Console.Write("UserName: ");
-            username = ValidateUsername();      
+            username = ValidateUsername();
 
             Console.Write("Password: ");
+            //password = SecurePassword.Protect();
             password = Console.ReadLine();
 
-            bool isnotPin = true;           
+            bool isnotPin = true;
             while (isnotPin)
             {
                 try
                 {
                     Console.Write("Pin: ");
                     pin = ValidatePin();
+
                     isnotPin = false;
                 }
                 catch (InvalidPinException e)
                 {
                     Console.WriteLine(e.Message);
                     Thread.Sleep(3000);
+
                     Console.Clear();
-                }             
+                }
             }
+
             Console.Clear();
 
-
             Console.WriteLine("Account details: \n\n ");
+
             accountType = ValidateAccoutType();
             initialDeposit = ValidateInitialDeposit();
-
-
 
             Account.CreateAccount();
         }

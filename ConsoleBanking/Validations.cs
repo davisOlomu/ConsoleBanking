@@ -11,27 +11,36 @@ namespace ConsoleBanking
         // Validate Pin
         public static int ValidatePin()
         {
-            if (!int.TryParse(Console.ReadLine(), out int pin))
+            // things to change
+            // do not return
+            // embed another functions
+            if (int.TryParse(Console.ReadLine(), out int pin))
             {
-                Designs.CenterTextNewLine("Invalid pin format");
-                Designs.CenterTextNewLine("Re-Enter Pin");
+                if (pin < 9999 && pin > 999)
+                {
+                    // continue;
+                }
+                else
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Invalid Pin!");
+                    Designs.CenterTextNewLine(" Pin must be below 9999 and above 999");
 
-                ValidatePin();
-
-                //  throw new InvalidPinException("Invalid pin format");
+                    Designs.CenterTextNewLine("Re-Enter Pin.\n");
+                    Console.Write("Pin: ");
+                    pin = ValidatePin();
+                }
             }
             else
             {
-                // Check if Pin already exist
-                while (dbAccess.VerifyPin(pin))
-                {
-                    Designs.CenterTextNewLine("Pin already exist.");
-                    Designs.CenterTextNewLine("Re-Enter Pin");
+                Console.Clear();
+                Designs.CenterTextNewLine("Invalid pin format");
+                Designs.CenterTextNewLine("Re-Enter Pin");
 
-                    pin = int.Parse(Console.ReadLine());
-                    dbAccess.VerifyPin(pin);
-                }
+                Console.Write("Pin: ");
+                pin = ValidatePin();
             }
+
             return pin;
         }
 
@@ -39,7 +48,7 @@ namespace ConsoleBanking
         // Validate Username
         public static string ValidateUsername()
         {
-            string username = Console.ReadLine();
+            string username = Console.ReadLine();;
 
             // Check if username already exist
             while (dbAccess.VerifyUserName(username))
@@ -94,13 +103,13 @@ namespace ConsoleBanking
             }
             SelectAccountType();
             return accountType;
-        }
 
+        }
         // Validate Initial deposit
         public static decimal ValidateInitialDeposit()
         {
-    
             decimal initialDeposit = new decimal();
+
             void deposit()
             {
                 Console.Write("\nOpening amount: $");
