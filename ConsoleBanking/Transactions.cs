@@ -46,10 +46,8 @@ namespace ConsoleBanking
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
                 Notifications.WaitWindow();
-
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
-
                 Console.Write("Amount:  $");
               
                 if (decimal.TryParse(Console.ReadLine(), out decimal amount))
@@ -60,26 +58,19 @@ namespace ConsoleBanking
                     {
                         Notifications.WaitWindow();
                         Designs.CenterTextNewLine("Insufficient funds!\n");
-
                         Thread.Sleep(2000);
                         Console.Clear();
-
                         Notifications.TransactionFailed();
-
                         withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
-
                     }
                     else if (amount <= 0)
                     {
                         Notifications.WaitWindow();
                         Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
-
                         Thread.Sleep(2000);
                         Console.Clear();
-
                         Notifications.TransactionFailed();
-
                         withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
                     }
@@ -87,32 +78,25 @@ namespace ConsoleBanking
                     {
                         Notifications.WaitWindow();
                         Notifications.TransactionSucess();
-
                         withdraw.TransactionStatus = TransactionStatus.Sucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
-
                         user.Balance -= amount;
                         dbAccess.UpdateBalance(user, user.Balance);
                     }
 
                     // Log this transaction in Db
                     dbAccess.CreateTransaction(withdraw, user.UserName);
-
                     Console.WriteLine(TransactionReceipt.Receipt(withdraw) + "\n\n");
-
                     Designs.DrawLine();
                     Console.BackgroundColor = ConsoleColor.Black;
-
                     Menu.ReturnToMenu();
                 }
                 else
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Wrong Input!");
-
                     Designs.CenterTextNewLine("Enter a valid Amount");
                     Thread.Sleep(1500);
-
                     MakeWithdrawal();
                     Console.Clear();
                 }
@@ -128,10 +112,8 @@ namespace ConsoleBanking
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
                 Notifications.WaitWindow();
-
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
-
                 Console.Write("Amount:  $");
 
                 if (decimal.TryParse(Console.ReadLine(), out decimal amount))
@@ -192,7 +174,7 @@ namespace ConsoleBanking
         // Get Account info.
         public static void ViewAccountDetails()
         {
-            Designs.CenterTextNewLine("\n\n\n\n");           
+           // Designs.CenterTextNewLine("\n\n\n\n");           
 
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
@@ -224,7 +206,7 @@ namespace ConsoleBanking
             Console.SetWindowSize(width, heigt);
 
             // Display data
-            DisplayTransactionsTable(transactionTable);
+            DisplayTransactionsAsTable(transactionTable);
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n\n");
@@ -232,7 +214,7 @@ namespace ConsoleBanking
             Menu.ReturnToMenu();
 
             // Iterate over table data.
-            static void DisplayTransactionsTable(DataTable table)
+            static void DisplayTransactionsAsTable(DataTable table)
             {            
                 for (int curCol = 0; curCol < table.Columns.Count; curCol++)
                 {                 
