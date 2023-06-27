@@ -50,25 +50,20 @@ namespace ConsoleBanking
                 {
                     Console.Write("Pin: ");
                     pin = ValidatePin();
-
                     isnotPin = false;
                 }
                 catch (InvalidPinException e)
                 {
                     Console.WriteLine(e.Message);
                     Thread.Sleep(3000);
-
                     Console.Clear();
                 }
             }
 
             Console.Clear();
-
             Console.WriteLine("Account details: \n\n ");
-
             accountType = ValidateAccoutType();
             initialDeposit = ValidateInitialDeposit();
-
             Account.CreateAccount();
         }
     }

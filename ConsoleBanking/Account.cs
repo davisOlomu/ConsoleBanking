@@ -3,7 +3,6 @@ using System.Threading;
 using ConsoleBankDataAccess;
 using static ConsoleBanking.AccountInfo;
 
-
 namespace ConsoleBanking
 {
     public class Account
@@ -31,11 +30,10 @@ namespace ConsoleBanking
             DataAccess newCustomer = new DataAccess();
             newCustomer.CreateCustomerAccount(newAccount);
 
-
             //// Create and Save first transaction in Database
             var initialdeposit = new TransactionModel() { TransactionDescription = "Initial Deposit", TransactionAmount = initialDeposit };
 
-            TransactionModel newTrans = new TransactionModel
+            TransactionModel newTransaction = new TransactionModel
             {
                 TransactionAmount = initialDeposit,
                 TransactionDescription = "Initial Deposit",
@@ -45,10 +43,8 @@ namespace ConsoleBanking
                 TransactionStatus = TransactionStatus.Sucessfull
             };
             newCustomer.CreateTransaction(initialdeposit, username);
-
             Console.Clear();
             Designs.CenterTextNewLine("Account sucessfully created.\n\n");
-
             Thread.Sleep(6000);
             Console.Clear();
 
