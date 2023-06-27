@@ -14,10 +14,8 @@ namespace ConsoleBanking
         public static void LogInMenu()
         {
             Console.ForegroundColor = ConsoleColor.White;
-
             Designs.CenterTextNewLine("\n\n");
             Designs.CenterTextSameLine("Username: ");
-
             user.UserName = Console.ReadLine();
 
             try
@@ -26,7 +24,6 @@ namespace ConsoleBanking
                 {
                     Designs.CenterTextSameLine("Password: ");
                     string password = Console.ReadLine();
-
                     Thread.Sleep(6000);
                     Console.Clear();
 
@@ -39,10 +36,8 @@ namespace ConsoleBanking
                     {
                         Console.Clear();
                         Designs.CenterTextNewLine("Incorrect password!");
-
                         Thread.Sleep(5000);
                         Console.Clear();
-
                         LogInMenu();
                     }
                 }
@@ -50,10 +45,8 @@ namespace ConsoleBanking
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Username not found! ");
-
                     Thread.Sleep(5000);
                     Console.Clear();
-
                     LogInMenu();
                 }
             }
@@ -61,10 +54,8 @@ namespace ConsoleBanking
             {
                 Console.Clear();
                 Designs.CenterTextNewLine(e.Message);
-
                 Thread.Sleep(5000);
                 Console.Clear();
-
                 LogInMenu();
             }
         }

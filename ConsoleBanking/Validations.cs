@@ -11,21 +11,14 @@ namespace ConsoleBanking
         // Validate Pin
         public static int ValidatePin()
         {
-            // things to change
-            // do not return
-            // embed another functions
             if (int.TryParse(Console.ReadLine(), out int pin))
             {
-                if (pin < 9999 && pin > 999)
-                {
-                    // continue;
-                }
+                if (pin < 9999 && pin > 999) { }
                 else
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Invalid Pin!");
                     Designs.CenterTextNewLine(" Pin must be below 9999 and above 999");
-
                     Designs.CenterTextNewLine("Re-Enter Pin.\n");
                     Console.Write("Pin: ");
                     pin = ValidatePin();
@@ -36,11 +29,9 @@ namespace ConsoleBanking
                 Console.Clear();
                 Designs.CenterTextNewLine("Invalid pin format");
                 Designs.CenterTextNewLine("Re-Enter Pin");
-
                 Console.Write("Pin: ");
                 pin = ValidatePin();
             }
-
             return pin;
         }
 
@@ -55,9 +46,7 @@ namespace ConsoleBanking
             {
                 Designs.CenterTextNewLine("Username already exist.");
                 Designs.CenterTextNewLine("Re-Enter Username");
-
                 username = Console.ReadLine();
-
                 dbAccess.VerifyUserName(username);
             }
             return username;
@@ -73,7 +62,6 @@ namespace ConsoleBanking
             void SelectAccountType()
             {
                 Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
-
                 ConsoleKeyInfo selectAccountType = Console.ReadKey();
                 Console.WriteLine();
 
@@ -82,28 +70,24 @@ namespace ConsoleBanking
                     case ConsoleKey.NumPad1:
                         accountType = AccountType.Savings;
                         break;
-
                     case ConsoleKey.NumPad2:
                         accountType = AccountType.Current;
                         break;
-
                     case ConsoleKey.NumPad3:
                         accountType = AccountType.Checking;
                         break;
-
                     default:
                         Console.Clear();
                         Console.WriteLine("Wrong Input!");
                         Thread.Sleep(2000);
-
                         Console.Clear();
                         SelectAccountType();
                         break;
                 }
             }
             SelectAccountType();
-            return accountType;
 
+            return accountType;
         }
         // Validate Initial deposit
         public static decimal ValidateInitialDeposit()
@@ -119,14 +103,13 @@ namespace ConsoleBanking
                     Console.Clear();
                     Designs.CenterTextNewLine("Wrong Input! ");
                     Designs.CenterTextNewLine("Re-Enter Amount ");
-
                     Thread.Sleep(2000);
                     Console.Clear();
-
                     deposit();
                 }
             }
             deposit();
+
             return initialDeposit;
         }
     }
