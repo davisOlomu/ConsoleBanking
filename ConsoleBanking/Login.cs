@@ -9,9 +9,14 @@ namespace ConsoleBanking
     public class Login
     {
         public static AccountModel user = new AccountModel();
-        public static DataAccess dbAccess = new DataAccess();
+        public static readonly DataAccess dbAccess = new DataAccess();
 
-        public static void LogInMenu()
+        public Login() { }
+        public Login(AccountModel user)
+        {
+           
+        }
+        public static  void LogInMenu()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Designs.CenterTextNewLine("\n\n");

@@ -13,17 +13,17 @@ namespace ConsoleBanking
         // Sign Up
         public static void OpenAccount()
         {
-            AccountInfo newUserAccount = new AccountInfo();
-            AccountInfo.CreateNewAccount();
+            AccountInformation newAccount = new AccountInformation();
+            AccountInformation.GetUserDetails();
         }
         // Retrieve balance
-        public static void CheckAccountBalance()
+        public static void CheckBalance()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
-                Notifications.WaitWindow();
+                TransactionNotifications.InProgress();
                 Console.WriteLine($"The balances on this account as at {DateTime.Now} are as follows.\n");
                 Console.WriteLine($"Current Balance\t\t:{user.Balance.ToString("C", CultureInfo.CurrentUICulture)}");
                 Console.WriteLine($"Available Balance\t:{user.Balance.ToString("C", CultureInfo.CurrentUICulture)}\n\n");
@@ -32,7 +32,6 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
-
         // Withdraw
         public static void MakeWithdrawal()
         {
@@ -41,7 +40,7 @@ namespace ConsoleBanking
             // Read From Db
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
-                Notifications.WaitWindow();
+                TransactionNotifications.InProgress();
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
                 Console.Write("Amount:  $");
@@ -52,34 +51,33 @@ namespace ConsoleBanking
 
                     if (amount > user.Balance)
                     {
-                        Notifications.WaitWindow();
+                        TransactionNotifications.InProgress();
                         Designs.CenterTextNewLine("Insufficient funds!\n");
                         Thread.Sleep(2000);
                         Console.Clear();
-                        Notifications.TransactionFailed();
+                        TransactionNotifications.Unsuccessfull();
                         withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
                     }
                     else if (amount <= 0)
                     {
-                        Notifications.WaitWindow();
+                        TransactionNotifications.InProgress();
                         Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
                         Thread.Sleep(2000);
                         Console.Clear();
-                        Notifications.TransactionFailed();
+                            TransactionNotifications.Unsuccessfull();
                         withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
                     }
                     else
                     {
-                        Notifications.WaitWindow();
-                        Notifications.TransactionSucess();
+                        TransactionNotifications.InProgress();
+                        TransactionNotifications.Successfull();
                         withdraw.TransactionStatus = TransactionStatus.Sucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
                         user.Balance -= amount;
                         dbAccess.UpdateBalance(user, user.Balance);
                     }
-
                     // Log this transaction in Db
                     dbAccess.CreateTransaction(withdraw, user.UserName);
                     Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
@@ -98,7 +96,6 @@ namespace ConsoleBanking
                 }
             }
         }
-
         // Deposit
         public static void MakeDeposit()
         {
@@ -107,7 +104,7 @@ namespace ConsoleBanking
             // Read From Db
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
-                Notifications.WaitWindow();
+                TransactionNotifications.InProgress();
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
                 Console.Write("Amount:  $");
@@ -119,18 +116,18 @@ namespace ConsoleBanking
                     if (amount <= 0)
                     {
                         Console.Clear();
-                        Notifications.WaitWindow();
+                        TransactionNotifications.InProgress();
                         Designs.CenterTextNewLine("Amount of deposit must be positive.\n");
                         Thread.Sleep(2000);
                         Console.Clear();
-                        Notifications.TransactionFailed();
+                        TransactionNotifications.Unsuccessfull();
                         deposit.TransactionStatus = TransactionStatus.Unsucessfull;
                         deposit.TransactionType = TransactionType.Credit;
                     }
                     else
                     {
-                        Notifications.WaitWindow();
-                        Notifications.TransactionSucess();
+                        TransactionNotifications.InProgress();
+                        TransactionNotifications.Successfull();
                         deposit.TransactionStatus = TransactionStatus.Sucessfull;
                         deposit.TransactionType = TransactionType.Credit;
                         user.Balance += amount;
@@ -154,28 +151,24 @@ namespace ConsoleBanking
                 }
             }
         }
-
         // Get Account info.
         public static void ViewAccountDetails()
         {
             // Designs.CenterTextNewLine("\n\n\n\n");           
-
             if (dbAccess.ReadFromCustomerWithUsername(user))
             {
-                Notifications.WaitWindow();
+                TransactionNotifications.InProgress();
                 Console.WriteLine($"Account Name: {user.FirstName} {user.LastName}\nAccount Number: {user.AccountNumber}\nAccount Type: {user.AccountType}\nEmail: {user.Email}\nAccount Balance: {user.Balance.ToString("C", CultureInfo.CurrentUICulture)}\nDate Opened:{user.DateCreated.ToShortDateString()}\nTime Opened: {user.TimeCreated}\n\n");
             }
             Designs.DrawLine();
             Console.BackgroundColor = ConsoleColor.Black;
             Menu.ReturnToMenu();
         }
-
-
         // Get all transactions as table.
         public static void ViewTransactionHistory()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
-            Notifications.WaitWindow();
+            TransactionNotifications.InProgress();
             DataTable transactionTable = dbAccess.ReadFromTransactionAsTable(user.UserName);
 
             // Reset console size to have a better view of transactions
@@ -184,13 +177,13 @@ namespace ConsoleBanking
             Console.SetWindowSize(width, heigt);
 
             // Display data
-            DisplayTransactionsAsTable(transactionTable);
+            DisplayHistoryAsTable(transactionTable);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n\n");
             Menu.ReturnToMenu();
 
             // Iterate over table data.
-            static void DisplayTransactionsAsTable(DataTable table)
+            static void DisplayHistoryAsTable(DataTable table)
             {
                 for (int curCol = 0; curCol < table.Columns.Count; curCol++)
                 {

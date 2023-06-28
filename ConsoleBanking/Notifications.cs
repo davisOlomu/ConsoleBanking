@@ -4,23 +4,23 @@ using System.Threading;
 namespace ConsoleBanking
 {
     // Show Transaction notifications
-    public class Notifications
+    public class TransactionNotifications
     {
-        public static void TransactionSucess()
+        public static void Successfull()
         {
             Console.Clear();
-            Designs.CenterTextNewLine("Transaction Sucessful!");
+            Designs.CenterTextNewLine("Transaction Successfull!");
             Thread.Sleep(1000);
             Console.Clear();
         }
-        public static void TransactionFailed()
+        public static void Unsuccessfull()
         {
             Console.Clear();
-            Designs.CenterTextNewLine("Transaction Unsucessful!");
+            Designs.CenterTextNewLine("Transaction Unsuccessfull!");
             Thread.Sleep(1000);
             Console.Clear();
         }
-        public static void WaitWindow()
+        public static void InProgress()
         {
             Console.Clear();
             Designs.CenterTextNewLine("Please Wait");

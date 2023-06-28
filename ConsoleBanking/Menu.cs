@@ -20,10 +20,10 @@ namespace ConsoleBanking
             Console.WriteLine($"{Designs.AlignText(37, "6. Logout")}");
             Designs.DrawLine();
             Console.BackgroundColor = ConsoleColor.Black;
-            ConsoleKeyInfo userOption = Console.ReadKey();
+            ConsoleKeyInfo option = Console.ReadKey();
             Console.Clear();
 
-            switch (userOption.Key)
+            switch (option.Key)
             {
                 case ConsoleKey.NumPad1:
                     Transactions.MakeWithdrawal();
@@ -32,7 +32,7 @@ namespace ConsoleBanking
                     Transactions.MakeDeposit();
                     break;
                 case ConsoleKey.NumPad3:
-                    Transactions.CheckAccountBalance();
+                    Transactions.CheckBalance();
                     break;
                 case ConsoleKey.NumPad4:
                     Transactions.ViewAccountDetails();
@@ -68,11 +68,11 @@ namespace ConsoleBanking
             Console.WriteLine($"{Designs.AlignText(0, "")}");
             Designs.DrawLine();
             Console.BackgroundColor = ConsoleColor.Black;
-            ConsoleKeyInfo userOption = Console.ReadKey();
-            Notifications.WaitWindow();
+            ConsoleKeyInfo option = Console.ReadKey();
+            TransactionNotifications.InProgress();
             Console.Clear();
 
-            switch (userOption.Key)
+            switch (option.Key)
             {
                 case ConsoleKey.NumPad1:
                     Console.Clear();
@@ -102,9 +102,9 @@ namespace ConsoleBanking
         public static void ReturnToMenu()
         {
             Console.WriteLine("0. Main Menu.");
-            ConsoleKeyInfo userOption = Console.ReadKey();
+            ConsoleKeyInfo option = Console.ReadKey();
 
-            if (userOption.Key == ConsoleKey.NumPad0)
+            if (option.Key == ConsoleKey.NumPad0)
             {
                 Console.Clear();
                 MainMenu();

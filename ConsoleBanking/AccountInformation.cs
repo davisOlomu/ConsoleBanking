@@ -5,19 +5,10 @@ using static ConsoleBanking.Validations;
 
 namespace ConsoleBanking
 {
-    public class AccountInfo
+    public class AccountInformation
     {
-        public static string firstname;
-        public static string lastname;
-        public static string email;
-        public static string username;
-        public static string password;
-        public static int pin;
-        public static decimal initialDeposit;
-        public static AccountType accountType;
-
         // SignUp!(new app user)
-        public static void CreateNewAccount()
+        public static void GetUserDetails()
         {
             Designs.CenterTextNewLine("Fill in the following details.");
             Designs.CenterTextNewLine("Press Enter Key after each field.\n\n");
@@ -26,24 +17,26 @@ namespace ConsoleBanking
 
             Console.WriteLine("Personal details: \n\n");
             Console.Write("Firstname: ");
-            firstname = Console.ReadLine();
+            string firstName = Console.ReadLine();
 
             Console.Write("Lastname: ");
-            lastname = Console.ReadLine();
+            string lastName = Console.ReadLine();
 
             Console.Write("Email: ");
-            email = Console.ReadLine();
+            string email = Console.ReadLine();
             Console.Clear();
 
             Console.WriteLine("Security: \n\n");
             Console.Write("UserName: ");
-            username = ValidateUsername();
+            string username = ValidateUsername();
 
             Console.Write("Password: ");
             //password = SecurePassword.Protect();
-            password = Console.ReadLine();
+            string password = Console.ReadLine();
 
+            int pin = 0;
             bool isnotPin = true;
+
             while (isnotPin)
             {
                 try
@@ -59,12 +52,12 @@ namespace ConsoleBanking
                     Console.Clear();
                 }
             }
-
             Console.Clear();
             Console.WriteLine("Account details: \n\n ");
-            accountType = ValidateAccoutType();
-            initialDeposit = ValidateInitialDeposit();
-            Account.CreateAccount();
+            AccountType type = ValidateAccoutType();
+            decimal initialDeposit = ValidateInitialDeposit();
+
+            Account.CreateAccount(firstName, lastName, email, username, password, initialDeposit, type, pin);
         }
     }
 }
