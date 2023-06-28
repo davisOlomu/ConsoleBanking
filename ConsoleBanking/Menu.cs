@@ -76,7 +76,7 @@ namespace ConsoleBanking
             {
                 case ConsoleKey.NumPad1:
                     Console.Clear();
-                    Login.LogInMenu();
+                    Login.VerifyUser();
                     break;
                 case ConsoleKey.NumPad2:
                     Console.Clear();

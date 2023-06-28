@@ -6,8 +6,8 @@ using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
 {
-    public class TransactionReceipt
-    {
+    public class TransactionReceipt 
+    {     
         // View transaction details
         public static string GetReceipt(TransactionModel model)
         {

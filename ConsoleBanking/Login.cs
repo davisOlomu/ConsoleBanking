@@ -5,18 +5,16 @@ using System.Data.SqlClient;
 
 namespace ConsoleBanking
 {
-    // Sign in (Existing users)
     public class Login
     {
+        // Wrong code approach here
+        // working on a solution.
+        // Exposing static data
         public static AccountModel user = new AccountModel();
         public static readonly DataAccess dbAccess = new DataAccess();
 
-        public Login() { }
-        public Login(AccountModel user)
-        {
-           
-        }
-        public static  void LogInMenu()
+        // Sign in (Existing users)
+        public static  void VerifyUser()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Designs.CenterTextNewLine("\n\n");
@@ -35,7 +33,7 @@ namespace ConsoleBanking
                     // Match username to password
                     if (user.UserName != null && password == user.Password)
                     {
-                        Menu.MainMenu();
+                        ConsoleBanking.Menu.MainMenu();
                     }
                     else
                     {
@@ -43,7 +41,7 @@ namespace ConsoleBanking
                         Designs.CenterTextNewLine("Incorrect password!");
                         Thread.Sleep(5000);
                         Console.Clear();
-                        LogInMenu();
+                        VerifyUser();
                     }
                 }
                 else
@@ -52,7 +50,7 @@ namespace ConsoleBanking
                     Designs.CenterTextNewLine("Username not found! ");
                     Thread.Sleep(5000);
                     Console.Clear();
-                    LogInMenu();
+                    VerifyUser();
                 }
             }
             catch (SqlException e)
@@ -61,7 +59,7 @@ namespace ConsoleBanking
                 Designs.CenterTextNewLine(e.Message);
                 Thread.Sleep(5000);
                 Console.Clear();
-                LogInMenu();
+                VerifyUser();
             }
         }
     }

@@ -5,10 +5,9 @@ using System.Globalization;
 using ConsoleBankDataAccess;
 using static ConsoleBanking.Login;
 
-
 namespace ConsoleBanking
-{
-    public class Transactions
+{   
+    public class Transactions 
     {
         // Sign Up
         public static void OpenAccount()
