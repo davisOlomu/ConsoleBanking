@@ -3,17 +3,19 @@ using System.Threading;
 using ConsoleBankDataAccess;
 using static ConsoleBanking.Login;
 
-
 namespace ConsoleBanking
 {
     public class Validations
-    {
-        // Validate Pin
+    {    
+        // Verify Pin
         public static int ValidatePin()
         {
             if (int.TryParse(Console.ReadLine(), out int pin))
             {
-                if (pin < 9999 && pin > 999) { }
+                if (pin < 9999 && pin > 999)
+                {
+                    return pin;
+                }
                 else
                 {
                     Console.Clear();
@@ -34,14 +36,12 @@ namespace ConsoleBanking
             }
             return pin;
         }
-
-
-        // Validate Username
+        // Verify Username
         public static string ValidateUsername()
         {
             string username = Console.ReadLine();;
 
-            // Check if username already exist
+            // Check if username already exist in Db
             while (dbAccess.VerifyUserName(username))
             {
                 Designs.CenterTextNewLine("Username already exist.");
@@ -51,54 +51,51 @@ namespace ConsoleBanking
             }
             return username;
         }
-
-
         // Validate Account Type
         public static AccountType ValidateAccoutType()
         {
             // Verify account type input
-            AccountType accountType = new Int32();
+            AccountType type = new Int32();
 
-            void SelectAccountType()
+            void GetAccountType()
             {
                 Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
-                ConsoleKeyInfo selectAccountType = Console.ReadKey();
+                ConsoleKeyInfo accountTypeOption = Console.ReadKey();
                 Console.WriteLine();
 
-                switch (selectAccountType.Key)
+                switch (accountTypeOption.Key)
                 {
                     case ConsoleKey.NumPad1:
-                        accountType = AccountType.Savings;
+                        type = AccountType.Savings;
                         break;
                     case ConsoleKey.NumPad2:
-                        accountType = AccountType.Current;
+                        type = AccountType.Current;
                         break;
                     case ConsoleKey.NumPad3:
-                        accountType = AccountType.Checking;
+                        type = AccountType.Checking;
                         break;
                     default:
                         Console.Clear();
                         Console.WriteLine("Wrong Input!");
                         Thread.Sleep(2000);
                         Console.Clear();
-                        SelectAccountType();
+                        GetAccountType();
                         break;
                 }
             }
-            SelectAccountType();
-
-            return accountType;
+            GetAccountType();
+            return type;
         }
-        // Validate Initial deposit
+        // Verify Initial deposit
         public static decimal ValidateInitialDeposit()
         {
-            decimal initialDeposit = new decimal();
+            decimal amount = new decimal();
 
             void deposit()
             {
                 Console.Write("\nOpening amount: $");
 
-                if (!decimal.TryParse(Console.ReadLine(), out initialDeposit))
+                if (!decimal.TryParse(Console.ReadLine(), out amount))
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Wrong Input! ");
@@ -109,8 +106,7 @@ namespace ConsoleBanking
                 }
             }
             deposit();
-
-            return initialDeposit;
+            return amount;
         }
     }
 }

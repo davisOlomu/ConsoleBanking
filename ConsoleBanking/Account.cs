@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using ConsoleBankDataAccess;
-using static ConsoleBanking.AccountInfo;
+using static ConsoleBanking.AccountInformation;
 
 namespace ConsoleBanking
 {
@@ -10,7 +10,7 @@ namespace ConsoleBanking
         // Account number Generator
         private static readonly Random _accountNumberSeed = new Random();
 
-        public static void CreateAccount()
+        public static void CreateAccount(string firstname, string lastname, string email, string username, string password, decimal initialDeposit, AccountType type, int pin)
         {
             // Create new user and save in Database
             AccountModel newAccount = new AccountModel
@@ -24,7 +24,7 @@ namespace ConsoleBanking
                 Balance = initialDeposit,
                 TimeCreated = DateTime.Now.TimeOfDay,
                 AccountNumber = _accountNumberSeed.Next(1234567891),
-                AccountType = accountType,
+                AccountType = type,
                 Pin = pin,
             };
             DataAccess newCustomer = new DataAccess();
