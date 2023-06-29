@@ -27,8 +27,8 @@ namespace ConsoleBanking
                 AccountType = type,
                 Pin = pin,
             };
-            DataAccess newCustomer = new DataAccess();
-            newCustomer.CreateCustomerAccount(newAccount);
+            DataLayer newCustomer = new DataLayer();
+            newCustomer.CreateAccount(newAccount);
 
             //// Create and Save first transaction in Database
             var initialdeposit = new TransactionModel() { TransactionDescription = "Initial Deposit", TransactionAmount = initialDeposit };

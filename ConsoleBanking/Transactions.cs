@@ -9,6 +9,7 @@ namespace ConsoleBanking
 {   
     public class Transactions 
     {
+        private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
         // Sign Up
         public static void OpenAccount()
         {
@@ -20,7 +21,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (dbAccess.ReadFromCustomerWithUsername(user))
+            if (dbAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.WriteLine($"The balances on this account as at {DateTime.Now} are as follows.\n");
@@ -37,7 +38,7 @@ namespace ConsoleBanking
             Designs.CenterTextNewLine("\n\n\n\n");
 
             // Read From Db
-            if (dbAccess.ReadFromCustomerWithUsername(user))
+            if (dbAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
@@ -101,7 +102,7 @@ namespace ConsoleBanking
             Designs.CenterTextNewLine("\n\n\n\n");
 
             // Read From Db
-            if (dbAccess.ReadFromCustomerWithUsername(user))
+            if (dbAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
@@ -154,7 +155,7 @@ namespace ConsoleBanking
         public static void ViewAccountDetails()
         {
             // Designs.CenterTextNewLine("\n\n\n\n");           
-            if (dbAccess.ReadFromCustomerWithUsername(user))
+            if (dbAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.WriteLine($"Account Name: {user.FirstName} {user.LastName}\nAccount Number: {user.AccountNumber}\nAccount Type: {user.AccountType}\nEmail: {user.Email}\nAccount Balance: {user.Balance.ToString("C", CultureInfo.CurrentUICulture)}\nDate Opened:{user.DateCreated.ToShortDateString()}\nTime Opened: {user.TimeCreated}\n\n");
@@ -168,7 +169,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
             TransactionNotifications.InProgress();
-            DataTable transactionTable = dbAccess.ReadFromTransactionAsTable(user.UserName);
+            DataTable transactionTable = dbAccess.GetTransactionHistory(user.UserName);
 
             // Reset console size to have a better view of transactions
             var width = Console.LargestWindowWidth;
