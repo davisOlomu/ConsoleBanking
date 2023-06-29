@@ -12,8 +12,8 @@ namespace ConsoleBanking
         public static string GetReceipt(TransactionModel model)
         {
             StringBuilder receipt = new StringBuilder();
-
-            if (dbAccess.ReadFromCustomerWithUsername(user))
+            string sql = $"Select * From Customer Where UserName = {user.UserName}";
+            if (dbAccess.GetUser(user, sql))
             {
                 receipt.AppendLine("The details of this transaction are shown below:\n\nTransaction Notification\n");
                 receipt.AppendLine($"Account Number: {user.AccountNumber}\nDescription: {model.TransactionDescription}\nAmount: {model.TransactionAmount.ToString("C", CultureInfo.CurrentUICulture)}\nValue Date: {DateTime.Now.ToShortDateString()}\nTime: {DateTime.Now.ToShortTimeString()}\nStatus: {model.TransactionStatus}\nTransaction Type: {model.TransactionType}\n\n");

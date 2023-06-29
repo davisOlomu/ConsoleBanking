@@ -11,19 +11,20 @@ namespace ConsoleBanking
         // working on a solution.
         // Exposing static data
         public static AccountModel user = new AccountModel();
-        public static readonly DataAccess dbAccess = new DataAccess();
+        public static readonly DataLayer dbAccess = new DataLayer();
 
         // Sign in (Existing users)
-        public static  void VerifyUser()
+        public static void VerifyUser()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Designs.CenterTextNewLine("\n\n");
             Designs.CenterTextSameLine("Username: ");
             user.UserName = Console.ReadLine();
+            string sql = $"Select * From Customer Where Username = '{user.UserName}'";
 
             try
             {
-                if (dbAccess.ReadFromCustomerWithUsername(user))
+                if (dbAccess.GetUser(user, sql))
                 {
                     Designs.CenterTextSameLine("Password: ");
                     string password = Console.ReadLine();
