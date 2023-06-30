@@ -3,9 +3,12 @@ using System.Threading;
 
 namespace ConsoleBanking
 {
+
+    /// <summary>
+    /// The various user interface
+    /// </summary>
     internal class Menu
     {
-        // Transaction page
         public static void MainMenu()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
@@ -54,7 +57,7 @@ namespace ConsoleBanking
                     break;
             }
         }
-        // Home page
+   
         public static void HomeMenu()
         {
             Designs.CenterTextNewLine("Welcome...\n\n\n\n");
@@ -98,7 +101,7 @@ namespace ConsoleBanking
                     break;
             }
         }
-        // Back to Transaction page
+
         public static void ReturnToMenu()
         {
             Console.WriteLine("0. Main Menu.");

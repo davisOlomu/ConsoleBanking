@@ -3,7 +3,9 @@ using System.Threading;
 
 namespace ConsoleBanking
 {
-    // Show Transaction notifications
+    /// <summary>
+    /// Status about transactions.
+    /// </summary>
     public class TransactionNotifications
     {
         public static void Successfull()

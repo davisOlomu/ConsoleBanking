@@ -6,17 +6,25 @@ using ConsoleBankDataAccess;
 using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
-{   
-    public class Transactions 
+{
+    /// <summary>
+    /// Represents the various functionality available to the application user.
+    /// </summary>
+    public class Transactions
     {
         private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
-        // Sign Up
+
+        /// <summary>
+        /// User's provide basic information and set account preference by filling a form..
+        /// </summary>
         public static void OpenAccount()
         {
-            AccountInformation newAccount = new AccountInformation();
             AccountInformation.GetUserDetails();
         }
-        // Retrieve balance
+
+      /// <summary>
+      /// Displays user account balance at a specific date and time.
+      /// </summary>
         public static void CheckBalance()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
@@ -32,12 +40,17 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
-        // Withdraw
+
+        /// <summary>
+        /// Various steps involved in making a withdrawal.
+        /// Notifies user if transaction was successfull or not.
+        /// Also keeps an history of the transaction.
+        /// </summary>
+        /// <param name="user">Current user logged in</param>
         public static void MakeWithdrawal()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            // Read From Db
             if (dbAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
@@ -65,7 +78,7 @@ namespace ConsoleBanking
                         Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
                         Thread.Sleep(2000);
                         Console.Clear();
-                            TransactionNotifications.Unsuccessfull();
+                        TransactionNotifications.Unsuccessfull();
                         withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
                     }
@@ -78,7 +91,7 @@ namespace ConsoleBanking
                         user.Balance -= amount;
                         dbAccess.UpdateBalance(user, user.Balance);
                     }
-                    // Log this transaction in Db
+                  
                     dbAccess.CreateTransaction(withdraw, user.UserName);
                     Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
                     Designs.DrawLine();
@@ -96,12 +109,17 @@ namespace ConsoleBanking
                 }
             }
         }
-        // Deposit
+
+        /// <summary>
+        /// Various steps involved in making a withdrawal.
+        /// Notifies user if transaction was successfull or not.
+        /// Also keeps an history of the transaction.
+        /// </summary>
+        /// <param name="user">Current user logged in</param>
         public static void MakeDeposit()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            // Read From Db
             if (dbAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
@@ -133,7 +151,7 @@ namespace ConsoleBanking
                         user.Balance += amount;
                         dbAccess.UpdateBalance(user, user.Balance);
                     }
-                    // Log this transaction in Db
+          
                     dbAccess.CreateTransaction(deposit, user.UserName);
                     Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
                     Designs.DrawLine();
@@ -151,7 +169,11 @@ namespace ConsoleBanking
                 }
             }
         }
-        // Get Account info.
+
+        /// <summary>
+        /// displays a valid user's account information
+        /// </summary>
+        /// <param name="user">Current user logged in</param>
         public static void ViewAccountDetails()
         {
             // Designs.CenterTextNewLine("\n\n\n\n");           
@@ -164,25 +186,28 @@ namespace ConsoleBanking
             Console.BackgroundColor = ConsoleColor.Black;
             Menu.ReturnToMenu();
         }
-        // Get all transactions as table.
+
+       /// <summary>
+       /// Display transaction history of a valid user.
+       /// The screen size is adjusted to accommodate the displayed information
+       /// Data is displayed as a table
+       /// </summary>
         public static void ViewTransactionHistory()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
             TransactionNotifications.InProgress();
             DataTable transactionTable = dbAccess.GetTransactionHistory(user.UserName);
 
-            // Reset console size to have a better view of transactions
             var width = Console.LargestWindowWidth;
             var heigt = Console.LargestWindowHeight;
             Console.SetWindowSize(width, heigt);
-
-            // Display data
+           
             DisplayHistoryAsTable(transactionTable);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n\n");
             Menu.ReturnToMenu();
+            Console.SetWindowSize(100, 25);
 
-            // Iterate over table data.
             static void DisplayHistoryAsTable(DataTable table)
             {
                 for (int curCol = 0; curCol < table.Columns.Count; curCol++)

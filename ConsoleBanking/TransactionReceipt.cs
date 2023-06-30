@@ -7,8 +7,13 @@ using static ConsoleBanking.Login;
 namespace ConsoleBanking
 {
     public class TransactionReceipt 
-    {     
-        // View transaction details
+    {
+        /// <summary>
+        /// View Information concerning a particular transaction.
+        /// </summary>
+        /// <param name="model">models the transaction table</param>
+        /// <param name="user">Current user logged in</param>
+        /// <returns>differnt information about a transaction</returns>
         public static string GetReceipt(TransactionModel model)
         {
             StringBuilder receipt = new StringBuilder();

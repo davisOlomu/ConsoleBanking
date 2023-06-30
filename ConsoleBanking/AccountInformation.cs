@@ -7,7 +7,10 @@ namespace ConsoleBanking
 {
     public class AccountInformation
     {
-        // SignUp!(new app user)
+        /// <summary>
+        /// Collects data, validates them and passes 
+        /// accurate data, for account creation.
+        /// </summary>
         public static void GetUserDetails()
         {
             Designs.CenterTextNewLine("Fill in the following details.");

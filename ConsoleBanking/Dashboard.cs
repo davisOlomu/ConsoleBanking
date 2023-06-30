@@ -4,7 +4,9 @@ namespace ConsoleBanking
 {
     internal class Dashboard
     {
-        // Application entry point
+        /// <summary>
+        /// Login or create a new account.
+        /// </summary>
         static void Main()
         {
             Console.Title = "Console Banking System[v1.0.0.0]";
