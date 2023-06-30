@@ -13,7 +13,11 @@ namespace ConsoleBanking
         public static AccountModel user = new AccountModel();
         public static readonly DataLayer dbAccess = new DataLayer();
 
-        // Sign in (Existing users)
+        /// <summary>
+        /// Validate an existing user,
+        /// using user's username and pin.
+        /// </summary>
+        /// <param name="user">sucessfully validated user</param>
         public static void VerifyUser()
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -31,10 +35,9 @@ namespace ConsoleBanking
                     Thread.Sleep(6000);
                     Console.Clear();
 
-                    // Match username to password
                     if (user.UserName != null && password == user.Password)
                     {
-                        ConsoleBanking.Menu.MainMenu();
+                        Menu.MainMenu();
                     }
                     else
                     {

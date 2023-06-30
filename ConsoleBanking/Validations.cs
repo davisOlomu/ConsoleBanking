@@ -6,8 +6,11 @@ using static ConsoleBanking.Login;
 namespace ConsoleBanking
 {
     public class Validations
-    {    
-        // Verify Pin
+    {
+        /// <summary>
+        ///   Verify that pin is within the range of 9999 and 999
+        /// </summary>
+        /// <returns>pin</returns>
         public static int ValidatePin()
         {
             if (int.TryParse(Console.ReadLine(), out int pin))
@@ -36,12 +39,15 @@ namespace ConsoleBanking
             }
             return pin;
         }
-        // Verify Username
+
+        /// <summary>
+        /// Verify that Username  doesn't already exist in the database.
+        /// </summary>
+        /// <returns>username if it doesnt't already exist</returns>
         public static string ValidateUsername()
         {
             string username = Console.ReadLine();;
 
-            // Check if username already exist in Db
             while (dbAccess.VerifyUserName(username))
             {
                 Designs.CenterTextNewLine("Username already exist.");
@@ -51,19 +57,24 @@ namespace ConsoleBanking
             }
             return username;
         }
-        // Validate Account Type
+
+     /// <summary>
+     /// allows users choose from a list of constants
+     /// </summary>
+     /// <param name="type">Account types</param>
+     /// <param name="option">User's choice</param>
+     /// <returns>account type selected</returns>
         public static AccountType ValidateAccoutType()
         {
-            // Verify account type input
             AccountType type = new Int32();
 
             void GetAccountType()
             {
                 Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
-                ConsoleKeyInfo accountTypeOption = Console.ReadKey();
+                ConsoleKeyInfo option = Console.ReadKey();
                 Console.WriteLine();
 
-                switch (accountTypeOption.Key)
+                switch (option.Key)
                 {
                     case ConsoleKey.NumPad1:
                         type = AccountType.Savings;
@@ -86,7 +97,11 @@ namespace ConsoleBanking
             GetAccountType();
             return type;
         }
-        // Verify Initial deposit
+
+        /// <summary>
+        /// Verify that input is a valid amount using the deposit 
+        /// </summary>
+        /// <returns>amount if it is a valid input</returns>
         public static decimal ValidateInitialDeposit()
         {
             decimal amount = new decimal();
