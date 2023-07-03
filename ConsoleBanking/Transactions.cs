@@ -18,8 +18,7 @@ namespace ConsoleBanking
         /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
         private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
-
-
+     
         /// <summary>
         /// User's provide basic information and set account preference by filling a form..
         /// </summary>
