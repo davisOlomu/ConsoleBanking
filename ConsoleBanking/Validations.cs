@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using ConsoleBankDataAccess;
-using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
 {
@@ -10,7 +9,7 @@ namespace ConsoleBanking
         /// <summary>
         /// 
         /// </summary>
-        private static readonly DataLayer dbAccess = new DataLayer();
+        private static readonly DataLayer databaseAccess = new DataLayer();
 
         /// <summary>
         ///   Verify that pin is within the range of 9999 and 999
@@ -53,12 +52,12 @@ namespace ConsoleBanking
         {
             string username = Console.ReadLine();;
 
-            while (dbAccess.VerifyUserName(username))
+            while (databaseAccess.VerifyUserName(username))
             {
                 Designs.CenterTextNewLine("Username already exist.");
                 Designs.CenterTextNewLine("Re-Enter Username");
                 username = Console.ReadLine();
-                dbAccess.VerifyUserName(username);
+                databaseAccess.VerifyUserName(username);
             }
             return username;
         }
