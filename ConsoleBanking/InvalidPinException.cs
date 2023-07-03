@@ -2,8 +2,11 @@
 
 namespace ConsoleBanking
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
-    public class InvalidPinException : Exception
+    internal class InvalidPinException : Exception
     {
         public InvalidPinException() { }
         public InvalidPinException(string message) : base(message) { }

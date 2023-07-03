@@ -6,8 +6,13 @@ using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
 {
-    public class TransactionReceipt 
+    internal static class TransactionReceipt 
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly DataLayer databaseAccess = new DataLayer();
+
         /// <summary>
         /// View Information concerning a particular transaction.
         /// </summary>
@@ -16,9 +21,10 @@ namespace ConsoleBanking
         /// <returns>differnt information about a transaction</returns>
         public static string GetReceipt(TransactionModel model)
         {
-            StringBuilder receipt = new StringBuilder();
+            
+        StringBuilder receipt = new StringBuilder();
             string sql = $"Select * From Customer Where UserName = {user.UserName}";
-            if (dbAccess.GetUser(user, sql))
+            if (databaseAccess.GetUser(user, sql))
             {
                 receipt.AppendLine("The details of this transaction are shown below:\n\nTransaction Notification\n");
                 receipt.AppendLine($"Account Number: {user.AccountNumber}\nDescription: {model.TransactionDescription}\nAmount: {model.TransactionAmount.ToString("C", CultureInfo.CurrentUICulture)}\nValue Date: {DateTime.Now.ToShortDateString()}\nTime: {DateTime.Now.ToShortTimeString()}\nStatus: {model.TransactionStatus}\nTransaction Type: {model.TransactionType}\n\n");
