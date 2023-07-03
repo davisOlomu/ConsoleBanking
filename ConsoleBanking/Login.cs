@@ -7,11 +7,13 @@ namespace ConsoleBanking
 {
     public class Login
     {
-        // Wrong code approach here
-        // working on a solution.
-        // Exposing static data
+        /// <summary>
+        /// Wrong code approach here
+        /// Exposing static data.
+        /// Working on a fix.
+        /// </summary>
         public static AccountModel user = new AccountModel();
-        public static readonly DataLayer dbAccess = new DataLayer();
+        private static readonly DataLayer databaseAccess = new DataLayer();
 
         /// <summary>
         /// Validate an existing user,
@@ -28,7 +30,7 @@ namespace ConsoleBanking
 
             try
             {
-                if (dbAccess.GetUser(user, sql))
+                if (databaseAccess.GetUser(user, sql))
                 {
                     Designs.CenterTextSameLine("Password: ");
                     string password = Console.ReadLine();

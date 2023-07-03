@@ -5,14 +5,30 @@ using static ConsoleBanking.AccountInformation;
 
 namespace ConsoleBanking
 {
-    public class Account
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class Account
     {
-        // Account number Generator
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly Random _accountNumberSeed = new Random();
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="firstname"></param>
+        /// <param name="lastname"></param>
+        /// <param name="email"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="initialDeposit"></param>
+        /// <param name="type"></param>
+        /// <param name="pin"></param>
         public static void CreateAccount(string firstname, string lastname, string email, string username, string password, decimal initialDeposit, AccountType type, int pin)
         {
-            // Create new user and save in Database
             AccountModel newAccount = new AccountModel
             {
                 FirstName = firstname,
@@ -30,7 +46,6 @@ namespace ConsoleBanking
             DataLayer newCustomer = new DataLayer();
             newCustomer.CreateAccount(newAccount);
 
-            //// Create and Save first transaction in Database
             var initialdeposit = new TransactionModel() { TransactionDescription = "Initial Deposit", TransactionAmount = initialDeposit };
 
             TransactionModel newTransaction = new TransactionModel
@@ -42,13 +57,13 @@ namespace ConsoleBanking
                 TransactionTime = DateTime.Now.TimeOfDay,
                 TransactionStatus = TransactionStatus.Sucessfull
             };
+
             newCustomer.CreateTransaction(initialdeposit, username);
             Console.Clear();
             Designs.CenterTextNewLine("Account sucessfully created.\n\n");
             Thread.Sleep(6000);
             Console.Clear();
 
-            // Login
             Menu.HomeMenu();
         }
     }

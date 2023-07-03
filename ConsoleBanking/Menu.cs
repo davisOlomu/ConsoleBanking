@@ -7,10 +7,11 @@ namespace ConsoleBanking
     /// <summary>
     /// The various user interface
     /// </summary>
-    internal class Menu
+    internal static class Menu
     {
         public static void MainMenu()
         {
+            Console.SetWindowSize(100, 25);
             Designs.CenterTextNewLine("\n\n\n\n");
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Designs.DrawLine();

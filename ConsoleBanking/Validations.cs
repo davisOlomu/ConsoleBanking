@@ -5,8 +5,13 @@ using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
 {
-    public class Validations
+    internal static class Validations
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly DataLayer dbAccess = new DataLayer();
+
         /// <summary>
         ///   Verify that pin is within the range of 9999 and 999
         /// </summary>

@@ -7,12 +7,18 @@ using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
 {
+
     /// <summary>
     /// Represents the various functionality available to the application user.
     /// </summary>
-    public class Transactions
+    internal static class Transactions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly DataLayer databaseAccess = new DataLayer();
         private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
+
 
         /// <summary>
         /// User's provide basic information and set account preference by filling a form..
@@ -22,14 +28,14 @@ namespace ConsoleBanking
             AccountInformation.GetUserDetails();
         }
 
-      /// <summary>
-      /// Displays user account balance at a specific date and time.
-      /// </summary>
+        /// <summary>
+        /// Displays user account balance at a specific date and time.
+        /// </summary>
         public static void CheckBalance()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (dbAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.WriteLine($"The balances on this account as at {DateTime.Now} are as follows.\n");
@@ -51,7 +57,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (dbAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
@@ -89,10 +95,10 @@ namespace ConsoleBanking
                         withdraw.TransactionStatus = TransactionStatus.Sucessfull;
                         withdraw.TransactionType = TransactionType.Debit;
                         user.Balance -= amount;
-                        dbAccess.UpdateBalance(user, user.Balance);
+                        databaseAccess.UpdateBalance(user, user.Balance);
                     }
-                  
-                    dbAccess.CreateTransaction(withdraw, user.UserName);
+
+                    databaseAccess.CreateTransaction(withdraw, user.UserName);
                     Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
                     Designs.DrawLine();
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -120,7 +126,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (dbAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
@@ -149,10 +155,10 @@ namespace ConsoleBanking
                         deposit.TransactionStatus = TransactionStatus.Sucessfull;
                         deposit.TransactionType = TransactionType.Credit;
                         user.Balance += amount;
-                        dbAccess.UpdateBalance(user, user.Balance);
+                        databaseAccess.UpdateBalance(user, user.Balance);
                     }
-          
-                    dbAccess.CreateTransaction(deposit, user.UserName);
+
+                    databaseAccess.CreateTransaction(deposit, user.UserName);
                     Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
                     Designs.DrawLine();
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -177,7 +183,7 @@ namespace ConsoleBanking
         public static void ViewAccountDetails()
         {
             // Designs.CenterTextNewLine("\n\n\n\n");           
-            if (dbAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(user, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.WriteLine($"Account Name: {user.FirstName} {user.LastName}\nAccount Number: {user.AccountNumber}\nAccount Type: {user.AccountType}\nEmail: {user.Email}\nAccount Balance: {user.Balance.ToString("C", CultureInfo.CurrentUICulture)}\nDate Opened:{user.DateCreated.ToShortDateString()}\nTime Opened: {user.TimeCreated}\n\n");
@@ -187,26 +193,25 @@ namespace ConsoleBanking
             Menu.ReturnToMenu();
         }
 
-       /// <summary>
-       /// Display transaction history of a valid user.
-       /// The screen size is adjusted to accommodate the displayed information
-       /// Data is displayed as a table
-       /// </summary>
+        /// <summary>
+        /// Display transaction history of a valid user.
+        /// The screen size is adjusted to accommodate the displayed information
+        /// Data is displayed as a table
+        /// </summary>
         public static void ViewTransactionHistory()
         {
             Designs.CenterTextNewLine("\n\n\n\n");
             TransactionNotifications.InProgress();
-            DataTable transactionTable = dbAccess.GetTransactionHistory(user.UserName);
+            DataTable transactionTable = databaseAccess.GetTransactionHistory(user.UserName);
 
             var width = Console.LargestWindowWidth;
             var heigt = Console.LargestWindowHeight;
             Console.SetWindowSize(width, heigt);
-           
+
             DisplayHistoryAsTable(transactionTable);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n\n");
             Menu.ReturnToMenu();
-            Console.SetWindowSize(100, 25);
 
             static void DisplayHistoryAsTable(DataTable table)
             {

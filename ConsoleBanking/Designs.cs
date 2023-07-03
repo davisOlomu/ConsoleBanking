@@ -2,21 +2,38 @@
 
 namespace ConsoleBanking
 {
-    public  class Designs
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class Designs
     {
-        // Center with acarriage return
+        /// <summary>
+        /// Center with acarriage return
+        /// </summary>
+        /// <param name="message"></param>
         public static void CenterTextNewLine(string message)
         {
             int spaces = 50 + (message.Length / 2);
             Console.WriteLine(message.PadLeft(spaces));      
         }
-        // Center without carriage return
+
+        /// <summary>
+        /// Center without carriage return
+        /// </summary>
+        /// <param name="message"></param>
         public static void CenterTextSameLine(string message)
         {
             int spaces = 50 + (message.Length / 2);
             Console.Write(message.PadLeft(spaces));
         }
-        // Align text
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SpacesToAdd"></param>
+        /// <param name="Msg"></param>
+        /// <param name="Alignment"></param>
+        /// <returns></returns>
         public static string AlignText(int SpacesToAdd, string Msg, string Alignment = "R")
         {
             if (Alignment == "L")
@@ -28,7 +45,10 @@ namespace ConsoleBanking
             }
             return Msg;
         }
-        // Draw lines
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static void DrawLine()
         {
             Console.WriteLine("+--------------------------------------------------------------------------------------------------+");

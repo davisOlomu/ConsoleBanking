@@ -5,7 +5,7 @@ using static ConsoleBanking.Validations;
 
 namespace ConsoleBanking
 {
-    public class AccountInformation
+    internal static class AccountInformation
     {
         /// <summary>
         /// Collects data, validates them and passes 
