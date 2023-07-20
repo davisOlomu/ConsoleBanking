@@ -47,7 +47,7 @@ namespace ConsoleBanking
         }
 
         /// <summary>
-        /// 
+        /// Fancy Lines.
         /// </summary>
         public static void DrawLine()
         {

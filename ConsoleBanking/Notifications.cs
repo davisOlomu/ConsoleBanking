@@ -12,14 +12,14 @@ namespace ConsoleBanking
         {
             Console.Clear();
             Designs.CenterTextNewLine("Transaction Successfull!");
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             Console.Clear();
         }
         public static void Unsuccessfull()
         {
             Console.Clear();
             Designs.CenterTextNewLine("Transaction Unsuccessfull!");
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             Console.Clear();
         }
         public static void InProgress()

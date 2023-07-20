@@ -7,9 +7,60 @@ namespace ConsoleBanking
     internal static class Validations
     {
         /// <summary>
-        /// 
+        /// Database instance.
         /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
+
+        /// <summary>
+        /// User must enter a firstname.
+        /// </summary>
+        /// <returns>Valid firstname</returns>
+        public static string ValidateFirstName()
+        {
+            string firstname = Console.ReadLine();
+            if (string.IsNullOrEmpty(firstname))
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Wrong Input! ");
+                Designs.CenterTextNewLine("Re-Enter Firstname.");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Firstname: ");
+                firstname = ValidateFirstName();
+            }
+            return firstname;
+        }
+
+        /// <summary>
+        /// User must enter a lastname.
+        /// </summary>
+        /// <returns>Valid lastname</returns>
+        public static string ValidateLastName()
+        {
+            string lastname = Console.ReadLine();
+            if (string.IsNullOrEmpty(lastname))
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Wrong Input! ");
+                Designs.CenterTextNewLine("Re-Enter Lastname.");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Lastname: ");
+                lastname = ValidateLastName();
+            }
+            return lastname;
+        }
+
+        /// <summary>
+        /// Verify that email address is a valid email URL.
+        /// </summary>
+        /// <returns>A valid email URL</returns>
+        public static string ValidateEmail()
+        {
+            string email = Console.ReadLine();
+
+            return email;
+        }
 
         /// <summary>
         ///   Verify that pin is within the range of 9999 and 999
@@ -19,7 +70,7 @@ namespace ConsoleBanking
         {
             if (int.TryParse(Console.ReadLine(), out int pin))
             {
-                if (pin < 9999 && pin > 999)
+                if (pin <= 9999 && pin > 999)
                 {
                     return pin;
                 }
@@ -45,86 +96,106 @@ namespace ConsoleBanking
         }
 
         /// <summary>
-        /// Verify that Username  doesn't already exist in the database.
+        /// Verify that Username doesn't already exist in the database.
         /// </summary>
         /// <returns>username if it doesnt't already exist</returns>
         public static string ValidateUsername()
         {
-            string username = Console.ReadLine();;
-
+            string username = Console.ReadLine();
             while (databaseAccess.VerifyUserName(username))
             {
                 Designs.CenterTextNewLine("Username already exist.");
                 Designs.CenterTextNewLine("Re-Enter Username");
+                Thread.Sleep(3000);
+                Console.Clear();
+                Console.Write("UserName: ");
                 username = Console.ReadLine();
                 databaseAccess.VerifyUserName(username);
             }
             return username;
         }
 
-     /// <summary>
-     /// allows users choose from a list of constants
-     /// </summary>
-     /// <param name="type">Account types</param>
-     /// <param name="option">User's choice</param>
-     /// <returns>account type selected</returns>
+        /// <summary>
+        /// Verify that password contains
+        /// at least One uppercase, One lower case,
+        /// and One special character.
+        /// </summary>
+        /// <returns></returns>
+        public static string VaidatePassword()
+        {
+            string password = Console.ReadLine();
+
+            return password;
+        }
+
+        /// <summary>
+        /// allows users choose from a list of constant Account types
+        /// </summary>
+        /// <param name="type">Account types</param>
+        /// <param name="option">User's choice</param>
+        /// <returns>account type selected</returns>
         public static AccountType ValidateAccoutType()
         {
-            AccountType type = new Int32();
+            AccountType type;
+            ConsoleKeyInfo userOption = Console.ReadKey();
+            Console.WriteLine();
 
-            void GetAccountType()
+            switch (userOption.Key)
             {
-                Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
-                ConsoleKeyInfo option = Console.ReadKey();
-                Console.WriteLine();
-
-                switch (option.Key)
-                {
-                    case ConsoleKey.NumPad1:
-                        type = AccountType.Savings;
-                        break;
-                    case ConsoleKey.NumPad2:
-                        type = AccountType.Current;
-                        break;
-                    case ConsoleKey.NumPad3:
-                        type = AccountType.Checking;
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("Wrong Input!");
-                        Thread.Sleep(2000);
-                        Console.Clear();
-                        GetAccountType();
-                        break;
-                }
+                case ConsoleKey.NumPad1:
+                    type = AccountType.Savings;
+                    break;
+                case ConsoleKey.NumPad2:
+                    type = AccountType.Current;
+                    break;
+                case ConsoleKey.NumPad3:
+                    type = AccountType.Checking;
+                    break;
+                default:
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Wrong Input!");
+                    Designs.CenterTextNewLine("Re-Select Account Type. ");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Account Type: ");
+                    type = ValidateAccoutType();
+                    break;
             }
-            GetAccountType();
             return type;
         }
 
         /// <summary>
-        /// Verify that input is a valid amount using the deposit 
+        /// Verify that inital deposit is at least #1000.
         /// </summary>
-        /// <returns>amount if it is a valid input</returns>
+        /// <returns>amount if it's at least #1000</returns>
         public static decimal ValidateInitialDeposit()
-        {
-            decimal amount = new decimal();
-
-            void deposit()
+        {     
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
-                Console.Write("\nOpening amount: $");
-
-                if (!decimal.TryParse(Console.ReadLine(), out amount))
+                if (amount >= 1000)
+                {
+                    return amount;
+                }
+                else
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Wrong Input! ");
-                    Designs.CenterTextNewLine("Re-Enter Amount ");
+                    Designs.CenterTextNewLine("Initial deposit must be at least #1000.");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    deposit();
+                    Console.Write("Opening amount: #");
+                    amount = ValidateInitialDeposit();
                 }
             }
-            deposit();
+            else
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Wrong Input! ");
+                Designs.CenterTextNewLine("Re-Enter Amount ");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Opening amount: #");
+                amount = ValidateInitialDeposit();
+            }
             return amount;
         }
     }
