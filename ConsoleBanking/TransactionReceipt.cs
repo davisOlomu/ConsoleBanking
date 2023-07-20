@@ -9,7 +9,7 @@ namespace ConsoleBanking
     internal static class TransactionReceipt 
     {
         /// <summary>
-        /// 
+        /// Database instance.
         /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
 
@@ -20,8 +20,7 @@ namespace ConsoleBanking
         /// <param name="user">Current user logged in</param>
         /// <returns>differnt information about a transaction</returns>
         public static string GetReceipt(TransactionModel model)
-        {
-            
+        {        
         StringBuilder receipt = new StringBuilder();
             string sql = $"Select * From Customer Where UserName = {user.UserName}";
             if (databaseAccess.GetUser(user, sql))

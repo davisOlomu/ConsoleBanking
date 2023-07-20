@@ -9,8 +9,7 @@ namespace ConsoleBanking
     {
         /// <summary>
         /// Wrong code approach here
-        /// Exposing static data.
-        /// Working on a fix.
+        /// Exposing static data. 
         /// </summary>
         public static AccountModel user = new AccountModel();
         private static readonly DataLayer databaseAccess = new DataLayer();
@@ -34,7 +33,7 @@ namespace ConsoleBanking
                 {
                     Designs.CenterTextSameLine("Password: ");
                     string password = Console.ReadLine();
-                    Thread.Sleep(6000);
+                    Thread.Sleep(3000);
                     Console.Clear();
 
                     if (user.UserName != null && password == user.Password)
@@ -45,7 +44,7 @@ namespace ConsoleBanking
                     {
                         Console.Clear();
                         Designs.CenterTextNewLine("Incorrect password!");
-                        Thread.Sleep(5000);
+                        Thread.Sleep(3000);
                         Console.Clear();
                         VerifyUser();
                     }
@@ -54,7 +53,7 @@ namespace ConsoleBanking
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Username not found! ");
-                    Thread.Sleep(5000);
+                    Thread.Sleep(3000);
                     Console.Clear();
                     VerifyUser();
                 }
@@ -63,7 +62,7 @@ namespace ConsoleBanking
             {
                 Console.Clear();
                 Designs.CenterTextNewLine(e.Message);
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
                 Console.Clear();
                 VerifyUser();
             }

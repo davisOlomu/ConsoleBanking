@@ -14,7 +14,7 @@ namespace ConsoleBanking
     internal static class Transactions
     {
         /// <summary>
-        /// 
+        /// Database instance.
         /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
         private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
@@ -23,8 +23,10 @@ namespace ConsoleBanking
         /// User's provide basic information and set account preference by filling a form..
         /// </summary>
         public static void OpenAccount()
-        {
-            AccountInformation.GetUserDetails();
+        {         
+            Account.GetUserDetails();
+            Account.CreateAccount();
+            Account.CreateInitialDeposit();
         }
 
         /// <summary>
