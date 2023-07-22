@@ -36,10 +36,7 @@ namespace ConsoleBanking
             Console.Clear();
 
             Console.WriteLine("Personal details: \n\n");
-            Console.Write("Firstname: ");
             _firstname = ValidateFirstName();
-
-            Console.Write("Lastname: ");
             _lastname = ValidateLastName();
 
             Console.Write("Email: ");
@@ -47,21 +44,13 @@ namespace ConsoleBanking
             Console.Clear();
 
             Console.WriteLine("Security: \n\n");
-            Console.Write("UserName: ");
             _username = ValidateUsername();
-
-            Console.Write("Password: ");
-            _password = Console.ReadLine();
-
-            Console.Write("Pin: ");
+            _password = ValidatePassword();
             _pin = ValidatePin();
             Console.Clear();
 
             Console.WriteLine("Account details: \n\n ");
-            Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
             _type = ValidateAccoutType();
-
-            Console.Write("\nOpening amount: #");
             _initialDeposit = ValidateInitialDeposit();
         }
 
