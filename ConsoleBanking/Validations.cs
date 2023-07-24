@@ -134,7 +134,16 @@ namespace ConsoleBanking
             while (string.IsNullOrEmpty(password))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Password cannot be null...");
+                Designs.CenterTextNewLine("Password cannot be empty...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
+            }
+            while (!(password.Length > 8))
+            {
+                Console.Clear();
+                Console.WriteLine("Password must contain at least 8 characters...");
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Password: ");
@@ -148,7 +157,7 @@ namespace ConsoleBanking
                 Console.Clear();
                 Console.Write("Password: ");
                 password = Console.ReadLine();
-            }
+            }       
             while (password.IndexOfAny(digitCharArray) == -1)
             {
                 Console.Clear();
