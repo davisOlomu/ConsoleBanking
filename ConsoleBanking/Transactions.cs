@@ -18,12 +18,12 @@ namespace ConsoleBanking
         /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
         private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
-     
+
         /// <summary>
         /// User's provide basic information and set account preference by filling a form..
         /// </summary>
         public static void OpenAccount()
-        {         
+        {
             Account.GetUserDetails();
             Account.CreateAccount();
             Account.CreateInitialDeposit();
@@ -64,56 +64,53 @@ namespace ConsoleBanking
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
                 Console.Write("Amount:  $");
+                decimal amount;
 
-                if (decimal.TryParse(Console.ReadLine(), out decimal amount))
-                {
-                    var withdraw = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
-
-                    if (amount > user.Balance)
-                    {
-                        TransactionNotifications.InProgress();
-                        Designs.CenterTextNewLine("Insufficient funds!\n");
-                        Thread.Sleep(2000);
-                        Console.Clear();
-                        TransactionNotifications.Unsuccessfull();
-                        withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
-                        withdraw.TransactionType = TransactionType.Debit;
-                    }
-                    else if (amount <= 0)
-                    {
-                        TransactionNotifications.InProgress();
-                        Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
-                        Thread.Sleep(2000);
-                        Console.Clear();
-                        TransactionNotifications.Unsuccessfull();
-                        withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
-                        withdraw.TransactionType = TransactionType.Debit;
-                    }
-                    else
-                    {
-                        TransactionNotifications.InProgress();
-                        TransactionNotifications.Successfull();
-                        withdraw.TransactionStatus = TransactionStatus.Sucessfull;
-                        withdraw.TransactionType = TransactionType.Debit;
-                        user.Balance -= amount;
-                        databaseAccess.UpdateBalance(user, user.Balance);
-                    }
-
-                    databaseAccess.CreateTransaction(withdraw, user.UserName);
-                    Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
-                    Designs.DrawLine();
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Menu.ReturnToMenu();
-                }
-                else
+                while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Wrong Input!");
                     Designs.CenterTextNewLine("Enter a valid Amount");
-                    Thread.Sleep(1500);
-                    MakeWithdrawal();
+                    Thread.Sleep(2000);
                     Console.Clear();
+                    Console.Write("Amount:  #");
                 }
+                var withdraw = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
+
+                if (amount > user.Balance)
+                {
+                    TransactionNotifications.InProgress();
+                    Designs.CenterTextNewLine("Insufficient funds!\n");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    TransactionNotifications.Unsuccessfull();
+                    withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
+                    withdraw.TransactionType = TransactionType.Debit;
+                }
+                else if (amount <= 0)
+                {
+                    TransactionNotifications.InProgress();
+                    Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    TransactionNotifications.Unsuccessfull();
+                    withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
+                    withdraw.TransactionType = TransactionType.Debit;
+                }
+                else
+                {
+                    TransactionNotifications.InProgress();
+                    TransactionNotifications.Successfull();
+                    withdraw.TransactionStatus = TransactionStatus.Sucessfull;
+                    withdraw.TransactionType = TransactionType.Debit;
+                    user.Balance -= amount;
+                    databaseAccess.UpdateBalance(user, user.Balance);
+                }
+                databaseAccess.CreateTransaction(withdraw, user.UserName);
+                Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
+                Designs.DrawLine();
+                Console.BackgroundColor = ConsoleColor.Black;
+                Menu.ReturnToMenu();
             }
         }
 
@@ -132,48 +129,44 @@ namespace ConsoleBanking
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
-                Console.Write("Amount:  $");
+                Console.Write("Amount:  #");
+                decimal amount;
 
-                if (decimal.TryParse(Console.ReadLine(), out decimal amount))
-                {
-                    var deposit = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
-
-                    if (amount <= 0)
-                    {
-                        Console.Clear();
-                        TransactionNotifications.InProgress();
-                        Designs.CenterTextNewLine("Amount of deposit must be positive.\n");
-                        Thread.Sleep(2000);
-                        Console.Clear();
-                        TransactionNotifications.Unsuccessfull();
-                        deposit.TransactionStatus = TransactionStatus.Unsucessfull;
-                        deposit.TransactionType = TransactionType.Credit;
-                    }
-                    else
-                    {
-                        TransactionNotifications.InProgress();
-                        TransactionNotifications.Successfull();
-                        deposit.TransactionStatus = TransactionStatus.Sucessfull;
-                        deposit.TransactionType = TransactionType.Credit;
-                        user.Balance += amount;
-                        databaseAccess.UpdateBalance(user, user.Balance);
-                    }
-
-                    databaseAccess.CreateTransaction(deposit, user.UserName);
-                    Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
-                    Designs.DrawLine();
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Menu.ReturnToMenu();
-                }
-                else
+                while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Wrong Input!");
                     Designs.CenterTextNewLine("Enter a valid Amount");
-                    Thread.Sleep(1500);
-                    MakeDeposit();
-                    Console.Clear();
+                    Thread.Sleep(2000);
+                    Console.Write("Description: ");
                 }
+                var deposit = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
+
+                if (amount <= 0)
+                {
+                    Console.Clear();
+                    TransactionNotifications.InProgress();
+                    Designs.CenterTextNewLine("Amount of deposit must be positive.\n");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    TransactionNotifications.Unsuccessfull();
+                    deposit.TransactionStatus = TransactionStatus.Unsucessfull;
+                    deposit.TransactionType = TransactionType.Credit;
+                }
+                else
+                {
+                    TransactionNotifications.InProgress();
+                    TransactionNotifications.Successfull();
+                    deposit.TransactionStatus = TransactionStatus.Sucessfull;
+                    deposit.TransactionType = TransactionType.Credit;
+                    user.Balance += amount;
+                    databaseAccess.UpdateBalance(user, user.Balance);
+                }
+                databaseAccess.CreateTransaction(deposit, user.UserName);
+                Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
+                Designs.DrawLine();
+                Console.BackgroundColor = ConsoleColor.Black;
+                Menu.ReturnToMenu();
             }
         }
 

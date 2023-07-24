@@ -19,14 +19,14 @@ namespace ConsoleBanking
         {
             Console.Write("Firstname: ");
             string firstname = Console.ReadLine();
-            if (string.IsNullOrEmpty(firstname))
+            while (string.IsNullOrEmpty(firstname))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Wrong Input! ");
-                Designs.CenterTextNewLine("Re-Enter Firstname.");
+                Designs.CenterTextNewLine("Firstname cannot be empty..");
                 Thread.Sleep(2000);
                 Console.Clear();
-                firstname = ValidateFirstName();
+                Console.Write("Firstname: ");
+                firstname = Console.ReadLine();
             }
             return firstname;
         }
@@ -39,14 +39,14 @@ namespace ConsoleBanking
         {
             Console.Write("Lastname: ");
             string lastname = Console.ReadLine();
-            if (string.IsNullOrEmpty(lastname))
+            while (string.IsNullOrEmpty(lastname))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Wrong Input! ");
-                Designs.CenterTextNewLine("Re-Enter Lastname.");
+                Designs.CenterTextNewLine("Lastname cannot be empty..");
                 Thread.Sleep(2000);
-                Console.Clear();   
-                lastname = ValidateLastName();
+                Console.Clear();
+                Console.Write("Lastname: ");
+                lastname = Console.ReadLine(); ;
             }
             return lastname;
         }
@@ -69,27 +69,25 @@ namespace ConsoleBanking
         public static int ValidatePin()
         {
             Console.Write("Pin: ");
-            if (int.TryParse(Console.ReadLine(), out int pin))
-            {
-                if (pin <= 9999 && pin > 999)
-                {
-                    return pin;
-                }
-                else
-                {
-                    Console.Clear();
-                    Designs.CenterTextNewLine("Invalid Pin!");
-                    Designs.CenterTextNewLine(" Pin must be below 9999 and above 999");
-                    Designs.CenterTextNewLine("Re-Enter Pin.\n");             
-                    pin = ValidatePin();
-                }
-            }
-            else
+            int pin;
+            while (!(int.TryParse(Console.ReadLine(), out pin)))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Invalid pin format");
-                Designs.CenterTextNewLine("Re-Enter Pin");
-                pin = ValidatePin();
+                Designs.CenterTextNewLine("Invalid pin format!");
+                Designs.CenterTextNewLine("Re-Enter Pin.");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Pin: ");
+            }
+            while (!(pin <= 9999 && pin > 999))
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Invalid Pin!");
+                Designs.CenterTextNewLine("Pin must be below 9999 and above 999.");
+                Designs.CenterTextNewLine("Re-Enter Pin.\n");
+                Console.Clear();
+                Console.Write("Pin: ");
+                int.TryParse(Console.ReadLine(), out pin);
             }
             return pin;
         }
@@ -108,7 +106,8 @@ namespace ConsoleBanking
                 Designs.CenterTextNewLine("Re-Enter Username");
                 Thread.Sleep(3000);
                 Console.Clear();
-                username = ValidateUsername();
+                Console.Write("UserName: ");
+                username = Console.ReadLine();
                 databaseAccess.VerifyUserName(username);
             }
             return username;
@@ -132,39 +131,41 @@ namespace ConsoleBanking
             Console.Write("Password: ");
             string password = Console.ReadLine();
 
-            if (!(password.IndexOfAny(upperCharArray) == -1))
+            while (string.IsNullOrEmpty(password))
             {
-                if (!(password.IndexOfAny(digitCharArray) == -1))
-                {
-                    if (!(password.IndexOfAny(specialCharArray) == -1))
-                    {
-                        return password;
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Password must contain at least one special character...");
-                        Thread.Sleep(2000);
-                        Console.Clear();
-                        password = ValidatePassword();
-                    }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Password must contain at least one digit...");
-                    Thread.Sleep(2000);
-                    Console.Clear();
-                    password = ValidatePassword();
-                }
+                Console.Clear();
+                Designs.CenterTextNewLine("Password cannot be null...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
             }
-            else
+            while (password.IndexOfAny(upperCharArray) == -1)
             {
                 Console.Clear();
                 Console.WriteLine("Password must contain at least one uppercase character...");
                 Thread.Sleep(2000);
                 Console.Clear();
-                password = ValidatePassword();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
+            }
+            while (password.IndexOfAny(digitCharArray) == -1)
+            {
+                Console.Clear();
+                Console.WriteLine("Password must contain at least one digit...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
+            }
+            while (password.IndexOfAny(specialCharArray) == -1)
+            {
+                Console.Clear();
+                Console.WriteLine("Password must contain at least one special character...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
             }
             return password;
         }
@@ -212,30 +213,25 @@ namespace ConsoleBanking
         /// <returns>amount if it's at least #1000</returns>
         public static decimal ValidateInitialDeposit()
         {
-            Console.Write("\nOpening amount: #");
-            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
-            {
-                if (amount >= 1000)
-                {
-                    return amount;
-                }
-                else
-                {
-                    Console.Clear();
-                    Designs.CenterTextNewLine("Initial deposit must be at least #1000.");
-                    Thread.Sleep(2000);
-                    Console.Clear();
-                    amount = ValidateInitialDeposit();
-                }
-            }
-            else
+            Console.Write("Opening amount: #");
+            decimal amount;
+            while (!(decimal.TryParse(Console.ReadLine(), out amount)))
             {
                 Console.Clear();
                 Designs.CenterTextNewLine("Wrong Input! ");
                 Designs.CenterTextNewLine("Re-Enter Amount ");
                 Thread.Sleep(2000);
-                Console.Clear();        
-                amount = ValidateInitialDeposit();
+                Console.Clear();
+                Console.Write("Opening amount: #");
+            }
+            while (!(amount >= 1000))
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Initial deposit must be at least #1000.");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Opening amount: #");
+                decimal.TryParse(Console.ReadLine(), out amount);
             }
             return amount;
         }

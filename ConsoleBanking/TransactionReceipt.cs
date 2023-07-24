@@ -22,7 +22,7 @@ namespace ConsoleBanking
         public static string GetReceipt(TransactionModel model)
         {        
         StringBuilder receipt = new StringBuilder();
-            string sql = $"Select * From Customer Where UserName = {user.UserName}";
+            string sql = $"Select * From Customer Where UserName = '{user.UserName}'";
             if (databaseAccess.GetUser(user, sql))
             {
                 receipt.AppendLine("The details of this transaction are shown below:\n\nTransaction Notification\n");
