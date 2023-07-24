@@ -57,8 +57,17 @@ namespace ConsoleBanking
         /// <returns>A valid email URL</returns>
         public static string ValidateEmail()
         {
+            Console.Write("Email: ");
             string email = Console.ReadLine();
-
+            while (string.IsNullOrEmpty(email))
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Email cannot be empty..");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Email: ");
+                email = Console.ReadLine(); ;
+            }
             return email;
         }
 
@@ -134,7 +143,16 @@ namespace ConsoleBanking
             while (string.IsNullOrEmpty(password))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Password cannot be null...");
+                Designs.CenterTextNewLine("Password cannot be empty...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
+            }
+            while (!(password.Length > 8))
+            {
+                Console.Clear();
+                Console.WriteLine("Password must contain at least 8 characters...");
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Password: ");
@@ -178,7 +196,7 @@ namespace ConsoleBanking
         /// <returns>account type selected</returns>
         public static AccountType ValidateAccoutType()
         {
-            AccountType type;
+            AccountType acctype;
             Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
             ConsoleKeyInfo userOption = Console.ReadKey();
             Console.WriteLine();
@@ -186,13 +204,13 @@ namespace ConsoleBanking
             switch (userOption.Key)
             {
                 case ConsoleKey.NumPad1:
-                    type = AccountType.Savings;
+                    acctype = AccountType.Savings;
                     break;
                 case ConsoleKey.NumPad2:
-                    type = AccountType.Current;
+                    acctype = AccountType.Current;
                     break;
                 case ConsoleKey.NumPad3:
-                    type = AccountType.Checking;
+                    acctype = AccountType.Checking;
                     break;
                 default:
                     Console.Clear();
@@ -201,10 +219,10 @@ namespace ConsoleBanking
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Account Type: ");
-                    type = ValidateAccoutType();
+                    acctype = ValidateAccoutType();
                     break;
             }
-            return type;
+            return acctype;
         }
 
         /// <summary>

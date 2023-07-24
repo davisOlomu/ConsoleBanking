@@ -19,7 +19,7 @@ namespace ConsoleBanking
         private static string _username;
         private static string _password;
         private static int _pin;
-        private static AccountType _type;
+        private static AccountType _acctype;
         private static decimal _initialDeposit;
         private static readonly Random _accountNumberSeed = new Random();
         private static readonly DataLayer databaseAccess = new DataLayer();
@@ -38,9 +38,7 @@ namespace ConsoleBanking
             Console.WriteLine("Personal details: \n\n");
             _firstname = ValidateFirstName();
             _lastname = ValidateLastName();
-
-            Console.Write("Email: ");
-            _email = Console.ReadLine();
+            _email = ValidateEmail();
             Console.Clear();
 
             Console.WriteLine("Security: \n\n");
@@ -50,7 +48,7 @@ namespace ConsoleBanking
             Console.Clear();
 
             Console.WriteLine("Account details: \n\n ");
-            _type = ValidateAccoutType();
+            _acctype = ValidateAccoutType();
             _initialDeposit = ValidateInitialDeposit();
         }
 
@@ -71,7 +69,7 @@ namespace ConsoleBanking
                 Balance = _initialDeposit,
                 TimeCreated = DateTime.Now.TimeOfDay,
                 AccountNumber = _accountNumberSeed.Next(1234567890),
-                AccountType = _type,
+                AccountType = _acctype,
                 Pin = _pin,
             };
             DataLayer newCustomer = new DataLayer();
