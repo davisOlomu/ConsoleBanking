@@ -26,7 +26,7 @@ namespace ConsoleBanking
             Designs.CenterTextSameLine("Username: ");
             user.UserName = Console.ReadLine();
             string sql = $"Select * From Customer Where Username = '{user.UserName}'";
-
+       
             while (!(databaseAccess.GetUser(user, sql)))
             {
                 Console.Clear();
@@ -36,7 +36,7 @@ namespace ConsoleBanking
                 Designs.CenterTextNewLine("\n\n");
                 Designs.CenterTextSameLine("Username: ");
                 user.UserName = Console.ReadLine();
-                databaseAccess.GetUser(user, sql);
+                databaseAccess.GetUser(user, sql);        
             }
             Designs.CenterTextSameLine("Password: ");
             string password = Console.ReadLine();
