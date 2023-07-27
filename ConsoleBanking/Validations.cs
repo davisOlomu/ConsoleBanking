@@ -15,10 +15,8 @@ namespace ConsoleBanking
         /// User must enter a firstname.
         /// </summary>
         /// <returns>Valid firstname</returns>
-        public static string ValidateFirstName()
+        public static string ValidateFirstName(string firstname)
         {
-            Console.Write("Firstname: ");
-            string firstname = Console.ReadLine();
             while (string.IsNullOrEmpty(firstname))
             {
                 Console.Clear();
@@ -35,10 +33,8 @@ namespace ConsoleBanking
         /// User must enter a lastname.
         /// </summary>
         /// <returns>Valid lastname</returns>
-        public static string ValidateLastName()
+        public static string ValidateLastName(string lastname)
         {
-            Console.Write("Lastname: ");
-            string lastname = Console.ReadLine();
             while (string.IsNullOrEmpty(lastname))
             {
                 Console.Clear();
@@ -55,10 +51,8 @@ namespace ConsoleBanking
         /// Verify that email address is a valid email URL.
         /// </summary>
         /// <returns>A valid email URL</returns>
-        public static string ValidateEmail()
+        public static string ValidateEmail(string email)
         {
-            Console.Write("Email: ");
-            string email = Console.ReadLine();
             while (string.IsNullOrEmpty(email))
             {
                 Console.Clear();
@@ -75,11 +69,10 @@ namespace ConsoleBanking
         ///   Verify that pin is within the range of 9999 and 999
         /// </summary>
         /// <returns>pin</returns>
-        public static int ValidatePin()
+        public static int ValidatePin(string userpin)
         {
-            Console.Write("Pin: ");
             int pin;
-            while (!(int.TryParse(Console.ReadLine(), out pin)))
+            while (!(int.TryParse(userpin, out pin)))
             {
                 Console.Clear();
                 Designs.CenterTextNewLine("Invalid pin format!");
@@ -87,6 +80,7 @@ namespace ConsoleBanking
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Pin: ");
+                userpin = Console.ReadLine();
             }
             while (!(pin <= 9999 && pin > 999))
             {
@@ -94,6 +88,7 @@ namespace ConsoleBanking
                 Designs.CenterTextNewLine("Invalid Pin!");
                 Designs.CenterTextNewLine("Pin must be below 9999 and above 999.");
                 Designs.CenterTextNewLine("Re-Enter Pin.\n");
+                Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Pin: ");
                 int.TryParse(Console.ReadLine(), out pin);
@@ -105,10 +100,8 @@ namespace ConsoleBanking
         /// Verify that Username doesn't already exist in the database.
         /// </summary>
         /// <returns>username if it doesnt't already exist</returns>
-        public static string ValidateUsername()
+        public static string ValidateUsername(string username)
         {
-            Console.Write("UserName: ");
-            string username = Console.ReadLine();
             while (databaseAccess.VerifyUserName(username))
             {
                 Designs.CenterTextNewLine("Username already exist.");
@@ -128,7 +121,7 @@ namespace ConsoleBanking
         /// and One special character.
         /// </summary>
         /// <returns>a password that has at least one uppercase, digit and special character</returns>
-        public static string ValidatePassword()
+        public static string ValidatePassword(string password)
         {
             const string CapitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string Digits = "0123456789";
@@ -136,9 +129,6 @@ namespace ConsoleBanking
             char[] upperCharArray = CapitalLetters.ToCharArray();
             char[] digitCharArray = Digits.ToCharArray();
             char[] specialCharArray = SpecialChars.ToCharArray();
-
-            Console.Write("Password: ");
-            string password = Console.ReadLine();
 
             while (string.IsNullOrEmpty(password))
             {
@@ -194,14 +184,11 @@ namespace ConsoleBanking
         /// <param name="type">Account types</param>
         /// <param name="option">User's choice</param>
         /// <returns>account type selected</returns>
-        public static AccountType ValidateAccoutType()
+        public static AccountType ValidateAccoutType(ConsoleKeyInfo accountType)
         {
-            AccountType acctype;
-            Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
-            ConsoleKeyInfo userOption = Console.ReadKey();
-            Console.WriteLine();
+            AccountType acctype;        
 
-            switch (userOption.Key)
+            switch (accountType.Key)
             {
                 case ConsoleKey.NumPad1:
                     acctype = AccountType.Savings;
@@ -219,7 +206,8 @@ namespace ConsoleBanking
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Account Type: ");
-                    acctype = ValidateAccoutType();
+                    accountType = Console.ReadKey();
+                    acctype = ValidateAccoutType(accountType);
                     break;
             }
             return acctype;
@@ -229,11 +217,10 @@ namespace ConsoleBanking
         /// Verify that inital deposit is at least #1000.
         /// </summary>
         /// <returns>amount if it's at least #1000</returns>
-        public static decimal ValidateInitialDeposit()
-        {
-            Console.Write("Opening amount: #");
+        public static decimal ValidateInitialDeposit(string initialdeposit)
+        {         
             decimal amount;
-            while (!(decimal.TryParse(Console.ReadLine(), out amount)))
+            while (!(decimal.TryParse(initialdeposit, out amount)))
             {
                 Console.Clear();
                 Designs.CenterTextNewLine("Wrong Input! ");
@@ -241,6 +228,7 @@ namespace ConsoleBanking
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Opening amount: #");
+                initialdeposit = Console.ReadLine();
             }
             while (!(amount >= 1000))
             {
