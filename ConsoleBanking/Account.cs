@@ -36,20 +36,41 @@ namespace ConsoleBanking
             Console.Clear();
 
             Console.WriteLine("Personal details: \n\n");
-            _firstname = ValidateFirstName();
-            _lastname = ValidateLastName();
-            _email = ValidateEmail();
+            Console.Write("Firstname: ");
+            string firstname = Console.ReadLine();        
+            _firstname = ValidateFirstName(firstname);
+
+            Console.Write("Lastname: ");
+            string lastname = Console.ReadLine();
+            _lastname = ValidateLastName(lastname);
+
+            Console.Write("Email: ");
+            string email = Console.ReadLine();
+            _email = ValidateEmail(email);
             Console.Clear();
 
             Console.WriteLine("Security: \n\n");
-            _username = ValidateUsername();
-            _password = ValidatePassword();
-            _pin = ValidatePin();
+            Console.Write("UserName: ");
+            string username = Console.ReadLine();
+            _username = ValidateUsername(username);
+
+            Console.Write("Password: ");
+            string password = Console.ReadLine();
+            _password = ValidatePassword(password);
+
+            Console.Write("Pin: ");
+            string pin = Console.ReadLine();
+            _pin = ValidatePin(pin);
             Console.Clear();
 
             Console.WriteLine("Account details: \n\n ");
-            _acctype = ValidateAccoutType();
-            _initialDeposit = ValidateInitialDeposit();
+            Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
+            ConsoleKeyInfo userOption = Console.ReadKey();
+            _acctype = ValidateAccoutType(userOption);
+
+            Console.Write("Opening amount: #");
+            string amount = Console.ReadLine();
+            _initialDeposit = ValidateInitialDeposit(amount);
         }
 
         /// <summary>

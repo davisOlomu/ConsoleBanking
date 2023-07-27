@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ConsoleBankDataAccess;
+using System;
 using System.Threading;
-using ConsoleBankDataAccess;
-using System.Data.SqlClient;
 
 namespace ConsoleBanking
 {
