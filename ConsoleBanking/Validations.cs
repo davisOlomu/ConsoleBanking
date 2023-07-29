@@ -69,26 +69,33 @@ namespace ConsoleBanking
         public static int ValidatePin(string userpin)
         {
             int pin;
-            while (!(int.TryParse(userpin, out pin)))
+            while (true)
             {
-                Console.Clear();
-                Designs.CenterTextNewLine("Invalid pin format!");
-                Designs.CenterTextNewLine("Re-Enter Pin.");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Pin: ");
-                userpin = Console.ReadLine();
-            }
-            while (!(pin <= 9999 && pin > 999))
-            {
-                Console.Clear();
-                Designs.CenterTextNewLine("Invalid Pin!");
-                Designs.CenterTextNewLine("Pin must be below 9999 and above 999...");
-                Designs.CenterTextNewLine("Re-Enter Pin.\n");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Pin: ");
-                int.TryParse(Console.ReadLine(), out pin);
+                if (!(int.TryParse(userpin, out pin)))
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Invalid pin format!");
+                    Designs.CenterTextNewLine("Re-Enter Pin.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Pin: ");
+                    userpin = Console.ReadLine();
+                }
+                else if (!(pin <= 9999 && pin > 999))
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Invalid Pin!");
+                    Designs.CenterTextNewLine("Pin must be below 9999 and above 999...");
+                    Designs.CenterTextNewLine("Re-Enter Pin.\n");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Pin: ");
+                    userpin = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
             }
             return pin;
         }
@@ -98,24 +105,31 @@ namespace ConsoleBanking
         /// <returns>username if it doesnt't already exist</returns>
         public static string ValidateUsername(string username)
         {
-            while (string.IsNullOrEmpty(username))
+            while (true)
             {
-                Console.Clear();
-                Designs.CenterTextNewLine("Email cannot be empty..");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Email: ");
-                username = Console.ReadLine(); ;
-            }
-            while (databaseAccess.VerifyUserName(username))
-            {
-                Designs.CenterTextNewLine("Username already exist...");
-                Designs.CenterTextNewLine("Re-Enter Username.");
-                Thread.Sleep(3000);
-                Console.Clear();
-                Console.Write("UserName: ");
-                username = Console.ReadLine();
-                databaseAccess.VerifyUserName(username);
+                if (string.IsNullOrEmpty(username))
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Username cannot be empty..");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("UserName: ");
+                    username = Console.ReadLine(); ;
+                }
+                else if (databaseAccess.VerifyUserName(username))
+                {
+                    Designs.CenterTextNewLine("Username already exist...");
+                    Designs.CenterTextNewLine("Re-Enter Username.");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    Console.Write("UserName: ");
+                    username = Console.ReadLine();
+                    databaseAccess.VerifyUserName(username);
+                }
+                else
+                {
+                    break;
+                }
             }
             return username;
         }
@@ -134,50 +148,59 @@ namespace ConsoleBanking
             char[] digitCharArray = Digits.ToCharArray();
             char[] specialCharArray = SpecialChars.ToCharArray();
 
-            while (string.IsNullOrEmpty(password))
+            while (true)
             {
-                Console.Clear();
-                Designs.CenterTextNewLine("Password cannot be empty...");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Password: ");
-                password = Console.ReadLine();
-            }
-            while (password.IndexOfAny(upperCharArray) == -1)
-            {
-                Console.Clear();
-                Console.WriteLine("Password must contain at least one uppercase character...");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Password: ");
-                password = Console.ReadLine();
-            }
-            while (password.IndexOfAny(digitCharArray) == -1)
-            {
-                Console.Clear();
-                Console.WriteLine("Password must contain at least one digit...");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Password: ");
-                password = Console.ReadLine();
-            }
-            while (password.IndexOfAny(specialCharArray) == -1)
-            {
-                Console.Clear();
-                Console.WriteLine("Password must contain at least one special character...");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Password: ");
-                password = Console.ReadLine();
-            }
-            while (!(password.Length > 8))
-            {
-                Console.Clear();
-                Console.WriteLine("Password must contain at least 8 characters...");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Password: ");
-                password = Console.ReadLine();
+                if (string.IsNullOrEmpty(password))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Password cannot be null or empty...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Enter password: ");
+                    password = Console.ReadLine();
+                }
+                else if (password.IndexOfAny(upperCharArray) == -1)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Password must contain at least one uppercase character...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Enter password: ");
+                    password = Console.ReadLine();
+                }
+                else if (password.IndexOfAny(digitCharArray) == -1)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Password must contain at least one digit...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Clear();
+                    Console.Write("Enter password: ");
+                    password = Console.ReadLine();
+                }
+                else if (password.IndexOfAny(specialCharArray) == -1)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Password must contain at least one special character...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Enter password: ");
+                    password = Console.ReadLine();
+                }
+                else if (password.Length < 8)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Password must contain at least eight characters...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Clear();
+                    Console.Write("Enter password: ");
+                    password = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
             }
             return password;
         }
@@ -209,7 +232,7 @@ namespace ConsoleBanking
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Account Type: ");
-                    Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
+                    Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking\n");
                     userOption = Console.ReadKey();
                     acctype = ValidateAccoutType(userOption);
                     break;
@@ -223,24 +246,31 @@ namespace ConsoleBanking
         public static decimal ValidateInitialDeposit(string initialdeposit)
         {
             decimal amount;
-            while (!(decimal.TryParse(initialdeposit, out amount)))
+            while (true)
             {
-                Console.Clear();
-                Designs.CenterTextNewLine("Wrong Input! ");
-                Designs.CenterTextNewLine("Re-Enter Amount ");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Opening amount: #");
-                initialdeposit = Console.ReadLine();
-            }
-            while (!(amount >= 1000))
-            {
-                Console.Clear();
-                Designs.CenterTextNewLine("Initial deposit must be at least #1,000.");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Opening amount: #");
-                decimal.TryParse(Console.ReadLine(), out amount);
+                if (!(decimal.TryParse(initialdeposit, out amount)))
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Wrong Input! ");
+                    Designs.CenterTextNewLine("Re-Enter Amount ");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Opening amount: #");
+                    initialdeposit = Console.ReadLine();
+                }
+                else if (!(amount >= 1000))
+                {
+                    Console.Clear();
+                    Designs.CenterTextNewLine("Initial deposit must be at least #1,000.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Opening amount: #");
+                    initialdeposit = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
             }
             return amount;
         }

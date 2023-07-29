@@ -64,7 +64,7 @@ namespace ConsoleBanking
             Console.Clear();
 
             Console.WriteLine("Account details: \n\n ");
-            Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
+            Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking\n");
             ConsoleKeyInfo userOption = Console.ReadKey();
             _acctype = ValidateAccoutType(userOption);
 
