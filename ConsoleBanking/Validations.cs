@@ -28,7 +28,6 @@ namespace ConsoleBanking
             }
             return firstname;
         }
-
         /// <summary>
         /// User must enter a lastname.
         /// </summary>
@@ -46,7 +45,6 @@ namespace ConsoleBanking
             }
             return lastname;
         }
-
         /// <summary>
         /// Verify that email address is a valid email URL.
         /// </summary>
@@ -64,7 +62,6 @@ namespace ConsoleBanking
             }
             return email;
         }
-
         /// <summary>
         ///   Verify that pin is within the range of 9999 and 999
         /// </summary>
@@ -86,7 +83,7 @@ namespace ConsoleBanking
             {
                 Console.Clear();
                 Designs.CenterTextNewLine("Invalid Pin!");
-                Designs.CenterTextNewLine("Pin must be below 9999 and above 999.");
+                Designs.CenterTextNewLine("Pin must be below 9999 and above 999...");
                 Designs.CenterTextNewLine("Re-Enter Pin.\n");
                 Thread.Sleep(2000);
                 Console.Clear();
@@ -95,17 +92,25 @@ namespace ConsoleBanking
             }
             return pin;
         }
-
         /// <summary>
         /// Verify that Username doesn't already exist in the database.
         /// </summary>
         /// <returns>username if it doesnt't already exist</returns>
         public static string ValidateUsername(string username)
         {
+            while (string.IsNullOrEmpty(username))
+            {
+                Console.Clear();
+                Designs.CenterTextNewLine("Email cannot be empty..");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Email: ");
+                username = Console.ReadLine(); ;
+            }
             while (databaseAccess.VerifyUserName(username))
             {
-                Designs.CenterTextNewLine("Username already exist.");
-                Designs.CenterTextNewLine("Re-Enter Username");
+                Designs.CenterTextNewLine("Username already exist...");
+                Designs.CenterTextNewLine("Re-Enter Username.");
                 Thread.Sleep(3000);
                 Console.Clear();
                 Console.Write("UserName: ");
@@ -114,7 +119,6 @@ namespace ConsoleBanking
             }
             return username;
         }
-
         /// <summary>
         /// Verify that password contains
         /// at least One uppercase, One lower case,
@@ -134,15 +138,6 @@ namespace ConsoleBanking
             {
                 Console.Clear();
                 Designs.CenterTextNewLine("Password cannot be empty...");
-                Thread.Sleep(2000);
-                Console.Clear();
-                Console.Write("Password: ");
-                password = Console.ReadLine();
-            }
-            while (!(password.Length > 8))
-            {
-                Console.Clear();
-                Console.WriteLine("Password must contain at least 8 characters...");
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Password: ");
@@ -175,20 +170,28 @@ namespace ConsoleBanking
                 Console.Write("Password: ");
                 password = Console.ReadLine();
             }
+            while (!(password.Length > 8))
+            {
+                Console.Clear();
+                Console.WriteLine("Password must contain at least 8 characters...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.Write("Password: ");
+                password = Console.ReadLine();
+            }
             return password;
         }
-
         /// <summary>
         /// allows users choose from a list of constant Account types
         /// </summary>
         /// <param name="type">Account types</param>
         /// <param name="option">User's choice</param>
         /// <returns>account type selected</returns>
-        public static AccountType ValidateAccoutType(ConsoleKeyInfo accountType)
+        public static AccountType ValidateAccoutType(ConsoleKeyInfo userOption)
         {
-            AccountType acctype;        
+            AccountType acctype;
 
-            switch (accountType.Key)
+            switch (userOption.Key)
             {
                 case ConsoleKey.NumPad1:
                     acctype = AccountType.Savings;
@@ -206,19 +209,19 @@ namespace ConsoleBanking
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Account Type: ");
-                    accountType = Console.ReadKey();
-                    acctype = ValidateAccoutType(accountType);
+                    Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking");
+                    userOption = Console.ReadKey();
+                    acctype = ValidateAccoutType(userOption);
                     break;
             }
             return acctype;
         }
-
         /// <summary>
         /// Verify that inital deposit is at least #1000.
         /// </summary>
         /// <returns>amount if it's at least #1000</returns>
         public static decimal ValidateInitialDeposit(string initialdeposit)
-        {         
+        {
             decimal amount;
             while (!(decimal.TryParse(initialdeposit, out amount)))
             {
@@ -233,7 +236,7 @@ namespace ConsoleBanking
             while (!(amount >= 1000))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Initial deposit must be at least #1000.");
+                Designs.CenterTextNewLine("Initial deposit must be at least #1,000.");
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Opening amount: #");

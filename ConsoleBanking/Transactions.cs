@@ -47,7 +47,6 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
-
         /// <summary>
         /// Various steps involved in making a withdrawal.
         /// Notifies user if transaction was successfull or not.
@@ -113,7 +112,6 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
-
         /// <summary>
         /// Various steps involved in making a withdrawal.
         /// Notifies user if transaction was successfull or not.
@@ -169,7 +167,6 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
-
         /// <summary>
         /// displays a valid user's account information
         /// </summary>
@@ -186,7 +183,6 @@ namespace ConsoleBanking
             Console.BackgroundColor = ConsoleColor.Black;
             Menu.ReturnToMenu();
         }
-
         /// <summary>
         /// Display transaction history of a valid user.
         /// The screen size is adjusted to accommodate the displayed information
