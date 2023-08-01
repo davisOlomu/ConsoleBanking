@@ -114,7 +114,7 @@ namespace ConsoleBanking
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("UserName: ");
-                    username = Console.ReadLine(); ;
+                    username = Console.ReadLine(); 
                 }
                 else if (databaseAccess.VerifyUserName(username))
                 {
@@ -210,11 +210,11 @@ namespace ConsoleBanking
         /// <param name="type">Account types</param>
         /// <param name="option">User's choice</param>
         /// <returns>account type selected</returns>
-        public static AccountType ValidateAccoutType(ConsoleKeyInfo userOption)
+        public static AccountType ValidateAccoutType(ConsoleKeyInfo userAccOption)
         {
             AccountType acctype;
 
-            switch (userOption.Key)
+            switch (userAccOption.Key)
             {
                 case ConsoleKey.NumPad1:
                     acctype = AccountType.Savings;
@@ -233,8 +233,8 @@ namespace ConsoleBanking
                     Console.Clear();
                     Console.Write("Account Type: ");
                     Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking\n");
-                    userOption = Console.ReadKey();
-                    acctype = ValidateAccoutType(userOption);
+                    userAccOption = Console.ReadKey();
+                    acctype = ValidateAccoutType(userAccOption);
                     break;
             }
             return acctype;

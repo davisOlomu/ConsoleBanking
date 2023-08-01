@@ -1,7 +1,6 @@
 ﻿using ConsoleBankDataAccess;
 using System;
 using System.Threading;
-using System.Data.SqlClient;
 
 namespace ConsoleBanking
 {
@@ -27,45 +26,46 @@ namespace ConsoleBanking
             user.UserName = Console.ReadLine();
             string sql = $"Select * From Customer Where Username = '{user.UserName}'";
 
-            try
+            while (true)
             {
-                if (databaseAccess.GetUser(user, sql))
+                if (string.IsNullOrEmpty(user.UserName))
                 {
-                    Designs.CenterTextSameLine("Password: ");
-                    string password = Console.ReadLine();
-                    Thread.Sleep(6000);
                     Console.Clear();
-
-                    if (user.UserName != null && password == user.Password)
-                    {
-                        Menu.MainMenu();
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Designs.CenterTextNewLine("Incorrect password!");
-                        Thread.Sleep(5000);
-                        Console.Clear();
-                        VerifyUser();
-                    }
+                    Designs.CenterTextNewLine("Username cannot be empty..");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Designs.CenterTextSameLine("Username: ");
+                    user.UserName = Console.ReadLine();
                 }
-                else
+                else if (!(databaseAccess.GetUser(user, sql)))
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Username not found! ");
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                     Console.Clear();
                     VerifyUser();
                 }
+                else
+                {
+                    break;
+                }
             }
-            catch (SqlException e)
+            Designs.CenterTextSameLine("Password: ");
+            string password = Console.ReadLine();
+            Thread.Sleep(2000);
+            Console.Clear();
+
+            while (!(user.UserName != null && password == user.Password))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine(e.Message);
-                Thread.Sleep(5000);
+                Designs.CenterTextNewLine("Incorrect password!");
+                Thread.Sleep(2000);
                 Console.Clear();
-                VerifyUser();
+                Designs.CenterTextSameLine("Password: ");
+                password = Console.ReadLine();
+                Console.Clear();
             }
+            Menu.MainMenu();
         }
     }
 }

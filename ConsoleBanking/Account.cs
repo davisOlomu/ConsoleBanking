@@ -65,8 +65,8 @@ namespace ConsoleBanking
 
             Console.WriteLine("Account details: \n\n ");
             Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking\n");
-            ConsoleKeyInfo userOption = Console.ReadKey();
-            _acctype = ValidateAccoutType(userOption);
+            ConsoleKeyInfo userAccOption = Console.ReadKey();
+            _acctype = ValidateAccoutType(userAccOption);
 
             Console.Write("Opening amount: #");
             string amount = Console.ReadLine();
@@ -87,7 +87,7 @@ namespace ConsoleBanking
                 Password = _password,
                 DateCreated = DateTime.Now.Date,
                 Balance = _initialDeposit,
-                TimeCreated = DateTime.Now.TimeOfDay,
+                TimeCreated = DateTime.Now.ToLocalTime(),
                 AccountNumber = _accountNumberSeed.Next(1234567890),
                 AccountType = _acctype,
                 Pin = _pin,
@@ -107,7 +107,7 @@ namespace ConsoleBanking
                 TransactionDescription = "Initial Deposit",
                 TransactionType = TransactionType.Credit,
                 TransactionDate = DateTime.Now.Date,
-                TransactionTime = DateTime.Now.TimeOfDay,
+                TransactionTime = DateTime.Now,
                 TransactionStatus = TransactionStatus.Sucessfull
             };
             databaseAccess.CreateTransaction(initialTransaction, _username);
