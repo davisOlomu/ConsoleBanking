@@ -17,7 +17,7 @@ namespace ConsoleBanking
         /// Database instance.
         /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
-        private static readonly string sqlStatement = $"Select * From Customer Where Username = '{user.UserName}'";
+        private static readonly string sqlStatement = $"Select * From Customer Where Username = '{UserLoggedIn.UserName}'";
 
         /// <summary>
         /// User's provide basic information and set account preference by filling a form..
@@ -36,12 +36,12 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (databaseAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.WriteLine($"The balances on this account as at {DateTime.Now} are as follows.\n");
-                Console.WriteLine($"Current Balance\t\t:{user.Balance.ToString("C", CultureInfo.CurrentUICulture)}");
-                Console.WriteLine($"Available Balance\t:{user.Balance.ToString("C", CultureInfo.CurrentUICulture)}\n\n");
+                Console.WriteLine($"Current Balance\t\t:{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}");
+                Console.WriteLine($"Available Balance\t:{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}\n\n");
                 Designs.DrawLine();
                 Console.BackgroundColor = ConsoleColor.Black;
                 Menu.ReturnToMenu();
@@ -57,7 +57,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (databaseAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
@@ -76,7 +76,7 @@ namespace ConsoleBanking
                 }
                 var withdraw = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
 
-                if (amount > user.Balance)
+                if (amount > UserLoggedIn.Balance)
                 {
                     TransactionNotifications.InProgress();
                     Designs.CenterTextNewLine("Insufficient funds!\n");
@@ -102,10 +102,10 @@ namespace ConsoleBanking
                     TransactionNotifications.Successfull();
                     withdraw.TransactionStatus = TransactionStatus.Sucessfull;
                     withdraw.TransactionType = TransactionType.Debit;
-                    user.Balance -= amount;
-                    databaseAccess.UpdateBalance(user, user.Balance);
+                    UserLoggedIn.Balance -= amount;
+                    databaseAccess.UpdateBalance(UserLoggedIn, UserLoggedIn.Balance);
                 }
-                databaseAccess.CreateTransaction(withdraw, user.UserName);
+                databaseAccess.CreateTransaction(withdraw, UserLoggedIn.UserName);
                 Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
                 Designs.DrawLine();
                 Console.BackgroundColor = ConsoleColor.Black;
@@ -122,7 +122,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
 
-            if (databaseAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
@@ -157,10 +157,10 @@ namespace ConsoleBanking
                     TransactionNotifications.Successfull();
                     deposit.TransactionStatus = TransactionStatus.Sucessfull;
                     deposit.TransactionType = TransactionType.Credit;
-                    user.Balance += amount;
-                    databaseAccess.UpdateBalance(user, user.Balance);
+                    UserLoggedIn.Balance += amount;
+                    databaseAccess.UpdateBalance(UserLoggedIn, UserLoggedIn.Balance);
                 }
-                databaseAccess.CreateTransaction(deposit, user.UserName);
+                databaseAccess.CreateTransaction(deposit, UserLoggedIn.UserName);
                 Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
                 Designs.DrawLine();
                 Console.BackgroundColor = ConsoleColor.Black;
@@ -174,10 +174,10 @@ namespace ConsoleBanking
         public static void ViewAccountDetails()
         {
             // Designs.CenterTextNewLine("\n\n\n\n");           
-            if (databaseAccess.GetUser(user, sqlStatement))
+            if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
-                Console.WriteLine($"Account Name: {user.FirstName} {user.LastName}\nAccount Number: {user.AccountNumber}\nAccount Type: {user.AccountType}\nEmail: {user.Email}\nAccount Balance: {user.Balance.ToString("C", CultureInfo.CurrentUICulture)}\nDate Opened:{user.DateCreated.ToShortDateString()}\nTime Opened: {user.TimeCreated}\n\n");
+                Console.WriteLine($"Account Name: {UserLoggedIn.FirstName} {UserLoggedIn.LastName}\nAccount Number: {UserLoggedIn.AccountNumber}\nAccount Type: {UserLoggedIn.AccountType}\nEmail: {UserLoggedIn.Email}\nAccount Balance: {UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}\nDate Opened:{UserLoggedIn.DateCreated.ToShortDateString()}\nTime Opened: {UserLoggedIn.TimeCreated}\n\n");
             }
             Designs.DrawLine();
             Console.BackgroundColor = ConsoleColor.Black;
@@ -192,7 +192,7 @@ namespace ConsoleBanking
         {
             Designs.CenterTextNewLine("\n\n\n\n");
             TransactionNotifications.InProgress();
-            DataTable transactionTable = databaseAccess.GetTransactionHistory(user.UserName);
+            DataTable transactionTable = databaseAccess.GetTransactionHistory(UserLoggedIn.UserName);
 
             var width = Console.LargestWindowWidth;
             var heigt = Console.LargestWindowHeight;
