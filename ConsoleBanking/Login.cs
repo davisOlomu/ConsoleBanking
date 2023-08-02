@@ -6,12 +6,18 @@ namespace ConsoleBanking
 {
     public class Login
     {
-        /// <summary>
-        /// Wrong code approach here
-        /// Exposing static data. 
-        /// </summary>
-        public static AccountModel user = new AccountModel();
+        
+        private static AccountModel userLoggedIn = new AccountModel();
         private static readonly DataLayer databaseAccess = new DataLayer();
+
+        /// <summary>
+        /// Expose user currently logged in.
+        /// </summary>
+        public static AccountModel UserLoggedIn
+        { 
+            get { return userLoggedIn; }
+            set { userLoggedIn = value; }
+        }
 
         /// <summary>
         /// Validate an existing user,
@@ -23,21 +29,21 @@ namespace ConsoleBanking
             Console.ForegroundColor = ConsoleColor.White;
             Designs.CenterTextNewLine("\n\n");
             Designs.CenterTextSameLine("Username: ");
-            user.UserName = Console.ReadLine();
-            string sql = $"Select * From Customer Where Username = '{user.UserName}'";
+            UserLoggedIn.UserName = Console.ReadLine();
+            string sql = $"Select * From Customer Where Username = '{UserLoggedIn.UserName}'";
 
             while (true)
             {
-                if (string.IsNullOrEmpty(user.UserName))
+                if (string.IsNullOrEmpty(UserLoggedIn.UserName))
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Username cannot be empty..");
                     Thread.Sleep(2000);
                     Console.Clear();
                     Designs.CenterTextSameLine("Username: ");
-                    user.UserName = Console.ReadLine();
+                    UserLoggedIn.UserName = Console.ReadLine();
                 }
-                else if (!(databaseAccess.GetUser(user, sql)))
+                else if (!(databaseAccess.GetUser(UserLoggedIn, sql)))
                 {
                     Console.Clear();
                     Designs.CenterTextNewLine("Username not found! ");
@@ -55,7 +61,7 @@ namespace ConsoleBanking
             Thread.Sleep(2000);
             Console.Clear();
 
-            while (!(user.UserName != null && password == user.Password))
+            while (!(UserLoggedIn.UserName != null && password == UserLoggedIn.Password))
             {
                 Console.Clear();
                 Designs.CenterTextNewLine("Incorrect password!");

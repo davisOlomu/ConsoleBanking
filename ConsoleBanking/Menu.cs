@@ -57,7 +57,7 @@ namespace ConsoleBanking
         public static void MainMenu()
         {
             Console.SetWindowSize(100, 25);
-            Designs.CenterTextNewLine($"Welcome {user.UserName}\n\n\n\n");
+            Designs.CenterTextNewLine($"Welcome {UserLoggedIn.UserName}\n\n\n\n");
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Designs.DrawLine();
             Console.WriteLine($"{Designs.AlignText(0, "")}");
