@@ -210,34 +210,33 @@ namespace ConsoleBanking
         /// <param name="type">Account types</param>
         /// <param name="option">User's choice</param>
         /// <returns>account type selected</returns>
-        public static AccountType ValidateAccoutType(ConsoleKeyInfo userAccOption)
+        public static AccountType ValidateAccoutType(string acccountType)
         {
-            AccountType acctype;
-
-            switch (userAccOption.Key)
+            AccountType type = 0;
+            while (true)
             {
-                case ConsoleKey.NumPad1:
-                    acctype = AccountType.Savings;
-                    break;
-                case ConsoleKey.NumPad2:
-                    acctype = AccountType.Current;
-                    break;
-                case ConsoleKey.NumPad3:
-                    acctype = AccountType.Checking;
-                    break;
-                default:
-                    Console.Clear();
+                if (acccountType.Contains("Savings"))
+                {
+                    type = AccountType.Savings;
+                }
+                else if (acccountType.Contains("Current"))
+                {
+                    type = AccountType.Current;
+                }
+                else if (acccountType.Contains("Checking"))
+                {
+                    type = AccountType.Checking;
+                }
+                else
+                {
                     Designs.CenterTextNewLine("Wrong Input!");
                     Designs.CenterTextNewLine("Re-Select Account Type. ");
                     Thread.Sleep(2000);
-                    Console.Clear();
-                    Console.Write("Account Type: ");
-                    Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking\n");
-                    userAccOption = Console.ReadKey();
-                    acctype = ValidateAccoutType(userAccOption);
-                    break;
-            }
-            return acctype;
+                    Console.Clear();           
+                }
+                break;;
+            }         
+            return type;
         }
         /// <summary>
         /// Verify that inital deposit is at least #1000.

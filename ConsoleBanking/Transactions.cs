@@ -67,7 +67,7 @@ namespace ConsoleBanking
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
-                    Console.Clear();
+                    Console.Clear();              
                     Designs.CenterTextNewLine("Wrong Input!");
                     Designs.CenterTextNewLine("Enter a valid Amount");
                     Thread.Sleep(2000);

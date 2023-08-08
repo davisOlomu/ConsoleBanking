@@ -13,6 +13,6 @@ namespace ConsoleBanking
             Console.SetWindowSize(100, 25);
             Console.ForegroundColor = ConsoleColor.White;
             Menu.HomeMenu();
-        } 
+        }       
     }
 }
