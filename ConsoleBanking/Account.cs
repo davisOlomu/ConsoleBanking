@@ -2,6 +2,7 @@
 using System.Threading;
 using ConsoleBankDataAccess;
 using static ConsoleBanking.Validations;
+using Spectre.Console;
 
 namespace ConsoleBanking
 {
@@ -64,10 +65,16 @@ namespace ConsoleBanking
             Console.Clear();
 
             Console.WriteLine("Account details: \n\n ");
-            Console.WriteLine("Select Account type:\n1.Savings\n2.Current\n3.Checking\n");
-            ConsoleKeyInfo userAccOption = Console.ReadKey();
-            _acctype = ValidateAccoutType(userAccOption);
-
+            var accListItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
+           .Title("")
+           .PageSize(10)
+           .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
+           .AddChoices(new[] {
+            "Savings",
+            "Current",
+            "Checking",
+           }));
+            _acctype = ValidateAccoutType(accListItem);
             Console.Write("Opening amount: #");
             string amount = Console.ReadLine();
             _initialDeposit = ValidateInitialDeposit(amount);

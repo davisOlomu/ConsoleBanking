@@ -1,12 +1,16 @@
 ﻿using ConsoleBankDataAccess;
 using System;
 using System.Threading;
+using Spectre.Console;
 
 namespace ConsoleBanking
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Login
     {
-        
+
         private static AccountModel userLoggedIn = new AccountModel();
         private static readonly DataLayer databaseAccess = new DataLayer();
 
@@ -14,7 +18,7 @@ namespace ConsoleBanking
         /// Expose user currently logged in.
         /// </summary>
         public static AccountModel UserLoggedIn
-        { 
+        {
             get { return userLoggedIn; }
             set { userLoggedIn = value; }
         }
@@ -56,8 +60,11 @@ namespace ConsoleBanking
                     break;
                 }
             }
-            Designs.CenterTextSameLine("Password: ");
-            string password = Console.ReadLine();
+     
+            var password = AnsiConsole.Prompt(
+              new TextPrompt<string>("[green]Password:[/]")
+             .PromptStyle("red")
+             .Secret());
             Thread.Sleep(2000);
             Console.Clear();
 
