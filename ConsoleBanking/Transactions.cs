@@ -1,8 +1,8 @@
-﻿using System;
-using System.Data;
-using System.Threading;
+﻿using ConsoleBankDataAccess;
+using Spectre.Console;
+using System;
 using System.Globalization;
-using ConsoleBankDataAccess;
+using System.Threading;
 using static ConsoleBanking.Login;
 
 namespace ConsoleBanking
@@ -47,6 +47,7 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
+
         /// <summary>
         /// Various steps involved in making a withdrawal.
         /// Notifies user if transaction was successfull or not.
@@ -62,7 +63,7 @@ namespace ConsoleBanking
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
-                Console.Write("Amount:  $");
+                Console.Write("Amount:# ");
                 decimal amount;
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
@@ -72,7 +73,7 @@ namespace ConsoleBanking
                     Designs.CenterTextNewLine("Enter a valid Amount");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    Console.Write("Amount:  #");
+                    Console.Write("Amount:# ");
                 }
                 var withdraw = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
 
@@ -112,6 +113,7 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
+
         /// <summary>
         /// Various steps involved in making a withdrawal.
         /// Notifies user if transaction was successfull or not.
@@ -127,7 +129,7 @@ namespace ConsoleBanking
                 TransactionNotifications.InProgress();
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
-                Console.Write("Amount:  #");
+                Console.Write("Amount:# ");
                 decimal amount;
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
@@ -167,22 +169,27 @@ namespace ConsoleBanking
                 Menu.ReturnToMenu();
             }
         }
+
         /// <summary>
         /// displays a valid user's account information
         /// </summary>
         /// <param name="user">Current user logged in</param>
         public static void ViewAccountDetails()
-        {
-            // Designs.CenterTextNewLine("\n\n\n\n");           
+        {       
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
-                Console.WriteLine($"Account Name: {UserLoggedIn.FirstName} {UserLoggedIn.LastName}\nAccount Number: {UserLoggedIn.AccountNumber}\nAccount Type: {UserLoggedIn.AccountType}\nEmail: {UserLoggedIn.Email}\nAccount Balance: {UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}\nDate Opened:{UserLoggedIn.DateCreated.ToShortDateString()}\nTime Opened: {UserLoggedIn.TimeCreated}\n\n");
+                var accountDetails = new Table();
+                accountDetails.Title("Account Details");
+                accountDetails.AddColumns("Firstname", "Lastname", "AccountNumber", "AccountType", "Email", "Balance", "Date", "Time");
+                accountDetails.AddRow($"{UserLoggedIn.FirstName}",$"{UserLoggedIn.LastName}",$"{UserLoggedIn.AccountNumber}",$"{UserLoggedIn.AccountType}",$"{UserLoggedIn.Email}",$"{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}",$"{UserLoggedIn.DateCreated.ToShortDateString()}",$"{UserLoggedIn.TimeCreated.ToShortTimeString()}");
+                AnsiConsole.Write(accountDetails);      
             }
             Designs.DrawLine();
             Console.BackgroundColor = ConsoleColor.Black;
             Menu.ReturnToMenu();
         }
+
         /// <summary>
         /// Display transaction history of a valid user.
         /// The screen size is adjusted to accommodate the displayed information
@@ -190,35 +197,10 @@ namespace ConsoleBanking
         /// </summary>
         public static void ViewTransactionHistory()
         {
-            Designs.CenterTextNewLine("\n\n\n\n");
             TransactionNotifications.InProgress();
-            DataTable transactionTable = databaseAccess.GetTransactionHistory(UserLoggedIn.UserName);
-
-            var width = Console.LargestWindowWidth;
-            var heigt = Console.LargestWindowHeight;
-            Console.SetWindowSize(width, heigt);
-
-            DisplayHistoryAsTable(transactionTable);
-            Console.BackgroundColor = ConsoleColor.Black;
+            databaseAccess.GetTransactionHistory(UserLoggedIn.UserName);
             Console.WriteLine("\n\n");
-            Menu.ReturnToMenu();
-
-            static void DisplayHistoryAsTable(DataTable table)
-            {
-                for (int curCol = 0; curCol < table.Columns.Count; curCol++)
-                {
-                    Console.Write($"{table.Columns[curCol].ColumnName}\t\t");
-                }
-                Console.WriteLine("\n");
-                for (int curRow = 0; curRow < table.Rows.Count; curRow++)
-                {
-                    for (int curCol = 0; curCol < table.Columns.Count; curCol++)
-                    {
-                        Console.Write($"{table.Rows[curRow][curCol]}\t");
-                    }
-                    Console.WriteLine("\n");
-                }
-            }
+            Menu.ReturnToMenu();     
         }
     }
 }
