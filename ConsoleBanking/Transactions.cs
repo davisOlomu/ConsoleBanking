@@ -181,7 +181,7 @@ namespace ConsoleBanking
                 TransactionNotifications.InProgress();
                 var accountDetails = new Table();
                 accountDetails.Title("Account Details");
-                accountDetails.AddColumns("Firstname", "Lastname", "AccountNumber", "AccountType", "Email", "Balance", "Date", "Time");
+                accountDetails.AddColumns("Firstname", "Lastname", "AccountNumber", "AccountType", "Email", "Balance", "DateCreated", "TimeCreated");
                 accountDetails.AddRow($"{UserLoggedIn.FirstName}",$"{UserLoggedIn.LastName}",$"{UserLoggedIn.AccountNumber}",$"{UserLoggedIn.AccountType}",$"{UserLoggedIn.Email}",$"{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}",$"{UserLoggedIn.DateCreated.ToShortDateString()}",$"{UserLoggedIn.TimeCreated.ToShortTimeString()}");
                 AnsiConsole.Write(accountDetails);      
             }
@@ -192,7 +192,6 @@ namespace ConsoleBanking
 
         /// <summary>
         /// Display transaction history of a valid user.
-        /// The screen size is adjusted to accommodate the displayed information
         /// Data is displayed as a table
         /// </summary>
         public static void ViewTransactionHistory()

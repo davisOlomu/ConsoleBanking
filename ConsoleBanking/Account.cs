@@ -64,9 +64,8 @@ namespace ConsoleBanking
             _pin = ValidatePin(pin);
             Console.Clear();
 
-            Console.WriteLine("Account details: \n\n ");
             var accListItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
-           .Title("")
+           .Title("Account details: \n\n ")
            .PageSize(10)
            .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
            .AddChoices(new[] {

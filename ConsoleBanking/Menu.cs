@@ -15,16 +15,15 @@ namespace ConsoleBanking
         public static void HomeMenu()
         {
             AnsiConsole.Write(
-            new FigletText("Welcome...")
+            new FigletText("KH Bank")
            .Centered()
            .Color(Color.Blue));
 
-            string title = "Welcome...".PadLeft(55);
             string login = "Login".PadLeft(50);
             string newAccount = "Open a new Account".PadLeft(57);
             string about = "About us".PadLeft(52);
             string exit = "Exit".PadLeft(50);
-
+            Console.WriteLine("\n\n");
             var menuItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
            .PageSize(10)
            .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
@@ -53,8 +52,7 @@ namespace ConsoleBanking
             }
             else
             {
-                Console.WriteLine("Thank you for banking with us...");
-                Environment.Exit(0);
+                HomeMenu();
             }
         }
 
@@ -74,7 +72,7 @@ namespace ConsoleBanking
             Console.SetWindowSize(100, 25);
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             var menuItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
-           .Title(title + "\n\n")
+           .Title(title + "\n\n\n")
            .PageSize(10)
            .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
            .AddChoices(withdraw)
