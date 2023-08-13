@@ -60,12 +60,11 @@ namespace ConsoleBanking
                     break;
                 }
             }
-     
+       
             var password = AnsiConsole.Prompt(
-              new TextPrompt<string>("[green]Password:[/]")
+              new TextPrompt<string>("Password: ")
              .PromptStyle("red")
              .Secret());
-            Thread.Sleep(2000);
             Console.Clear();
 
             while (!(UserLoggedIn.UserName != null && password == UserLoggedIn.Password))

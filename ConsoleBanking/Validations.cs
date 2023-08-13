@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
 using ConsoleBankDataAccess;
+using FluentValidation;
 
 namespace ConsoleBanking
 {
-    internal static class Validations
+    internal class Validations : AbstractValidator<AccountModel>
     {
         /// <summary>
         /// Database instance.
@@ -28,6 +29,7 @@ namespace ConsoleBanking
             }
             return firstname;
         }
+
         /// <summary>
         /// User must enter a lastname.
         /// </summary>
@@ -45,12 +47,15 @@ namespace ConsoleBanking
             }
             return lastname;
         }
+
         /// <summary>
         /// Verify that email address is a valid email URL.
         /// </summary>
         /// <returns>A valid email URL</returns>
-        public static string ValidateEmail(string email)
+        public static string ValidateEmail( string email)
         {
+            //RuleFor(email => email.Email).NotNull();
+            //RuleFor(email => email.Email).EmailAddress();
             while (string.IsNullOrEmpty(email))
             {
                 Console.Clear();
@@ -62,6 +67,7 @@ namespace ConsoleBanking
             }
             return email;
         }
+
         /// <summary>
         ///   Verify that pin is within the range of 9999 and 999
         /// </summary>
@@ -133,6 +139,7 @@ namespace ConsoleBanking
             }
             return username;
         }
+
         /// <summary>
         /// Verify that password contains
         /// at least One uppercase, One lower case,
@@ -204,6 +211,7 @@ namespace ConsoleBanking
             }
             return password;
         }
+
         /// <summary>
         /// allows users choose from a list of constant Account types
         /// </summary>
@@ -238,6 +246,7 @@ namespace ConsoleBanking
             }         
             return type;
         }
+
         /// <summary>
         /// Verify that inital deposit is at least #1000.
         /// </summary>
@@ -254,7 +263,7 @@ namespace ConsoleBanking
                     Designs.CenterTextNewLine("Re-Enter Amount ");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    Console.Write("Opening amount: #");
+                    Console.Write("Opening amount: # ");
                     initialdeposit = Console.ReadLine();
                 }
                 else if (!(amount >= 1000))
@@ -263,7 +272,7 @@ namespace ConsoleBanking
                     Designs.CenterTextNewLine("Initial deposit must be at least #1,000.");
                     Thread.Sleep(2000);
                     Console.Clear();
-                    Console.Write("Opening amount: #");
+                    Console.Write("Opening amount: # ");
                     initialdeposit = Console.ReadLine();
                 }
                 else

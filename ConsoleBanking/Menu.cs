@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using Spectre.Console;
+using System;
 using static ConsoleBanking.Login;
-using Spectre.Console;
 
 namespace ConsoleBanking
 {
@@ -14,40 +13,46 @@ namespace ConsoleBanking
         /// 
         /// </summary>
         public static void HomeMenu()
-        {     
+        {
+            AnsiConsole.Write(
+            new FigletText("KH Bank")
+           .Centered()
+           .Color(Color.Blue));
+
+            string login = "Login".PadLeft(50);
+            string newAccount = "Open a new Account".PadLeft(57);
+            string about = "About us".PadLeft(52);
+            string exit = "Exit".PadLeft(50);
+            Console.WriteLine("\n\n");
             var menuItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
-           .Title("Welcome...\n\n")
            .PageSize(10)
            .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
-           .AddChoices(new[] {
-            "Login for Existing Customers",
-            "Open a new Account",
-            "About Us",
-            "Exit",
-           }));
-           
-            if (menuItem.StartsWith("L"))
+           .AddChoices(login)
+           .AddChoices(newAccount)
+           .AddChoices(about)
+           .AddChoices(exit));
+
+            if (menuItem.Contains("Login"))
             {
                 VerifyUser();
             }
-            else if (menuItem.StartsWith("O"))
+            else if (menuItem.Contains("Open"))
             {
                 Transactions.OpenAccount();
             }
-            else if (menuItem.StartsWith("A"))
+            else if (menuItem.Contains("About"))
             {
                 Console.Clear();
                 Console.WriteLine("Coming soon");
             }
-            else if (menuItem.StartsWith("E"))
+            else if (menuItem.Contains("Exit"))
             {
                 Console.WriteLine("Thank you for banking with us...");
                 Environment.Exit(0);
             }
             else
             {
-                Console.WriteLine("Thank you for banking with us...");
-                Environment.Exit(0);
+                HomeMenu();
             }
         }
 
@@ -56,26 +61,32 @@ namespace ConsoleBanking
         /// </summary>
         public static void MainMenu()
         {
+            string title = $"Welcome {UserLoggedIn.UserName}".PadLeft(55);
+            string withdraw = "Withdraw".PadLeft(50);
+            string deposit = "Deposit".PadLeft(50);
+            string balance = "Account Balance".PadLeft(54);
+            string details = "Account Details".PadLeft(54);
+            string history = "Transaction History".PadLeft(56);
+            string logout = "Log out".PadLeft(50);
+
             Console.SetWindowSize(100, 25);
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             var menuItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
-           .Title($"Welcome {UserLoggedIn.UserName}\n\n")
+           .Title(title + "\n\n\n")
            .PageSize(10)
            .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
-           .AddChoices(new[] {
-            "Withdraw ",
-            "Deposit",
-            "Account Balance",
-            "Account Details",
-            "Transaction History",
-            "Log out"
-           }));
+           .AddChoices(withdraw)
+           .AddChoices(deposit)
+           .AddChoices(balance)
+           .AddChoices(details)
+           .AddChoices(history)
+           .AddChoices(logout));
 
-            if (menuItem.StartsWith("W"))
+            if (menuItem.Contains("Withdraw"))
             {
                 Transactions.MakeWithdrawal();
             }
-            else if (menuItem.StartsWith("D"))
+            else if (menuItem.Contains("Deposit"))
             {
                 Transactions.MakeDeposit();
             }
@@ -87,12 +98,12 @@ namespace ConsoleBanking
             {
                 Transactions.ViewAccountDetails();
             }
-            else if (menuItem.StartsWith("T"))
+            else if (menuItem.Contains("History"))
             {
                 Transactions.ViewTransactionHistory();
                 ReturnToMenu();
             }
-            else if (menuItem.StartsWith("L"))
+            else if (menuItem.Contains("out"))
             {
                 HomeMenu();
             }
@@ -103,6 +114,9 @@ namespace ConsoleBanking
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void ReturnToMenu()
         {
             Console.WriteLine("0. Main Menu.");
