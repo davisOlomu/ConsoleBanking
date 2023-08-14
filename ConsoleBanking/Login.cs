@@ -30,12 +30,12 @@ namespace ConsoleBanking
         /// <param name="user">sucessfully validated user</param>
         public static void VerifyUser()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Designs.CenterTextNewLine("\n\n");
             Console.ForegroundColor = ConsoleColor.Blue;
             Designs.CenterTextSameLine("Username: ");
             Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Red;
             UserLoggedIn.UserName = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.White;
             string sql = $"Select * From Customer Where Username = '{UserLoggedIn.UserName}'";
 
             while (true)

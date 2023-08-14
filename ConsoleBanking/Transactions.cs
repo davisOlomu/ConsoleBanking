@@ -43,7 +43,6 @@ namespace ConsoleBanking
                 Console.WriteLine($"Current Balance\t\t:{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}");
                 Console.WriteLine($"Available Balance\t:{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}\n\n");
                 Designs.DrawLine();
-                Console.BackgroundColor = ConsoleColor.Black;
                 Menu.ReturnToMenu();
             }
         }
@@ -61,9 +60,9 @@ namespace ConsoleBanking
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
-                Console.Write("Description: ");
+                AnsiConsole.Markup("[blue]Description: [/]");
                 string description = Console.ReadLine();
-                Console.Write("Amount:# ");
+                AnsiConsole.Markup("[blue]Amount: # [/]");
                 decimal amount;
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
@@ -109,7 +108,6 @@ namespace ConsoleBanking
                 databaseAccess.CreateTransaction(withdraw, UserLoggedIn.UserName);
                 Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
                 Designs.DrawLine();
-                Console.BackgroundColor = ConsoleColor.Black;
                 Menu.ReturnToMenu();
             }
         }
@@ -127,9 +125,9 @@ namespace ConsoleBanking
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
-                Console.Write("Description: ");
+                AnsiConsole.Markup("[blue]Description: [/]");
                 string description = Console.ReadLine();
-                Console.Write("Amount:# ");
+                AnsiConsole.Markup("[blue]Amount: # [/]");
                 decimal amount;
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
@@ -165,7 +163,6 @@ namespace ConsoleBanking
                 databaseAccess.CreateTransaction(deposit, UserLoggedIn.UserName);
                 Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
                 Designs.DrawLine();
-                Console.BackgroundColor = ConsoleColor.Black;
                 Menu.ReturnToMenu();
             }
         }
@@ -178,15 +175,14 @@ namespace ConsoleBanking
         {       
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
-                TransactionNotifications.InProgress();
+                TransactionNotifications.InProgress();        
                 var accountDetails = new Table();
-                accountDetails.Title("Account Details");
-                accountDetails.AddColumns("Firstname", "Lastname", "AccountNumber", "AccountType", "Email", "Balance", "DateCreated", "TimeCreated");
-                accountDetails.AddRow($"{UserLoggedIn.FirstName}",$"{UserLoggedIn.LastName}",$"{UserLoggedIn.AccountNumber}",$"{UserLoggedIn.AccountType}",$"{UserLoggedIn.Email}",$"{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}",$"{UserLoggedIn.DateCreated.ToShortDateString()}",$"{UserLoggedIn.TimeCreated.ToShortTimeString()}");
+                accountDetails.Title("[blue]Account Details[/]");
+                accountDetails.AddColumns("[blue]Firstname[/]", "[blue]Lastname[/]", "[blue]AccountNumber[/]", "[blue]AccountType[/]", "[blue]Email[/]", "[blue]Balance[/]", "[blue]DateCreated[/]", "[blue]TimeCreated[/]");
+                accountDetails.AddRow($"[green]{UserLoggedIn.FirstName}[/]",$"[purple]{UserLoggedIn.LastName}[/]",$"[red]{UserLoggedIn.AccountNumber}[/]",$"{UserLoggedIn.AccountType}",$"[green]{UserLoggedIn.Email}[/]",$"[red]{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}[/]",$"[yellow]{UserLoggedIn.DateCreated.ToShortDateString()}[/]",$"[red]{UserLoggedIn.TimeCreated.ToShortTimeString()}[/]");
                 AnsiConsole.Write(accountDetails);      
             }
             Designs.DrawLine();
-            Console.BackgroundColor = ConsoleColor.Black;
             Menu.ReturnToMenu();
         }
 
