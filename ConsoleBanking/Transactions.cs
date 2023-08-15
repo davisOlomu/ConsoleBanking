@@ -34,15 +34,14 @@ namespace ConsoleBanking
         /// </summary>
         public static void CheckBalance()
         {
-            Designs.CenterTextNewLine("\n\n\n\n");
+            AnsiConsole.Write(new Markup("\n\n\n\n").Centered());
 
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
-                Console.WriteLine($"The balances on this account as at {DateTime.Now} are as follows.\n");
-                Console.WriteLine($"Current Balance\t\t:{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}");
-                Console.WriteLine($"Available Balance\t:{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}\n\n");
-                Designs.DrawLine();
+                AnsiConsole.MarkupLine($"[blue]The balances on this account as at[/][red] {DateTime.Now}[/][blue] are as follows.[/]\n");
+                AnsiConsole.MarkupLine($"[blue]Current Balance:\t\t[/][red]#{UserLoggedIn.Balance}[/]");
+                AnsiConsole.MarkupLine($"[blue]Available Balance:\t[/][red]#{UserLoggedIn.Balance}[/]");
                 Menu.ReturnToMenu();
             }
         }
@@ -55,21 +54,22 @@ namespace ConsoleBanking
         /// <param name="user">Current user logged in</param>
         public static void MakeWithdrawal()
         {
-            Designs.CenterTextNewLine("\n\n\n\n");
+            AnsiConsole.Write(new Markup("\n\n\n\n").Centered());
 
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 AnsiConsole.Markup("[blue]Description: [/]");
+                Console.ForegroundColor = ConsoleColor.Red;
                 string description = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
                 AnsiConsole.Markup("[blue]Amount: # [/]");
                 decimal amount;
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
-                    Console.Clear();              
-                    Designs.CenterTextNewLine("Wrong Input!");
-                    Designs.CenterTextNewLine("Enter a valid Amount");
+                    Console.Clear();
+                    AnsiConsole.Write(new Markup("[red]Wrong Input!e[/]\nEnter a valid Amount").Centered()); 
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Amount:# ");
@@ -79,7 +79,7 @@ namespace ConsoleBanking
                 if (amount > UserLoggedIn.Balance)
                 {
                     TransactionNotifications.InProgress();
-                    Designs.CenterTextNewLine("Insufficient funds!\n");
+                    AnsiConsole.Write(new Markup("[red]Insufficient funds!\n[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     TransactionNotifications.Unsuccessfull();
@@ -89,7 +89,7 @@ namespace ConsoleBanking
                 else if (amount <= 0)
                 {
                     TransactionNotifications.InProgress();
-                    Designs.CenterTextNewLine("Withdraw amount must be positive.\n");
+                    AnsiConsole.Write(new Markup("[red]Withdraw amount must be positive.\n[/]").Centered()); 
                     Thread.Sleep(2000);
                     Console.Clear();
                     TransactionNotifications.Unsuccessfull();
@@ -107,7 +107,6 @@ namespace ConsoleBanking
                 }
                 databaseAccess.CreateTransaction(withdraw, UserLoggedIn.UserName);
                 Console.WriteLine(TransactionReceipt.GetReceipt(withdraw) + "\n\n");
-                Designs.DrawLine();
                 Menu.ReturnToMenu();
             }
         }
@@ -120,21 +119,22 @@ namespace ConsoleBanking
         /// <param name="user">Current user logged in</param>
         public static void MakeDeposit()
         {
-            Designs.CenterTextNewLine("\n\n\n\n");
+            AnsiConsole.Write(new Markup("\n\n\n\n").Centered());
 
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
                 TransactionNotifications.InProgress();
                 AnsiConsole.Markup("[blue]Description: [/]");
+                Console.ForegroundColor = ConsoleColor.Red;
                 string description = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
                 AnsiConsole.Markup("[blue]Amount: # [/]");
                 decimal amount;
 
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Wrong Input!");
-                    Designs.CenterTextNewLine("Enter a valid Amount");
+                    AnsiConsole.Write(new Markup("[red]Wrong Input!\nEnter a valid Amount[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Write("Description: ");
                 }
@@ -144,7 +144,7 @@ namespace ConsoleBanking
                 {
                     Console.Clear();
                     TransactionNotifications.InProgress();
-                    Designs.CenterTextNewLine("Amount of deposit must be positive.\n");
+                    AnsiConsole.Write(new Markup("[red]Amount of deposit must be positive.\n[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     TransactionNotifications.Unsuccessfull();
@@ -162,7 +162,6 @@ namespace ConsoleBanking
                 }
                 databaseAccess.CreateTransaction(deposit, UserLoggedIn.UserName);
                 Console.WriteLine(TransactionReceipt.GetReceipt(deposit) + "\n\n");
-                Designs.DrawLine();
                 Menu.ReturnToMenu();
             }
         }
@@ -182,7 +181,6 @@ namespace ConsoleBanking
                 accountDetails.AddRow($"[green]{UserLoggedIn.FirstName}[/]",$"[purple]{UserLoggedIn.LastName}[/]",$"[red]{UserLoggedIn.AccountNumber}[/]",$"{UserLoggedIn.AccountType}",$"[green]{UserLoggedIn.Email}[/]",$"[red]{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}[/]",$"[yellow]{UserLoggedIn.DateCreated.ToShortDateString()}[/]",$"[red]{UserLoggedIn.TimeCreated.ToShortTimeString()}[/]");
                 AnsiConsole.Write(accountDetails);      
             }
-            Designs.DrawLine();
             Menu.ReturnToMenu();
         }
 
@@ -194,7 +192,6 @@ namespace ConsoleBanking
         {
             TransactionNotifications.InProgress();
             databaseAccess.GetTransactionHistory(UserLoggedIn.UserName);
-            Console.WriteLine("\n\n");
             Menu.ReturnToMenu();     
         }
     }

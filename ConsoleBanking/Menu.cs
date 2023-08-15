@@ -47,11 +47,13 @@ namespace ConsoleBanking
             }
             else if (menuItem.Contains("Exit"))
             {
+                Console.Clear();
                 Console.WriteLine("Thank you for banking with us...");
                 Environment.Exit(0);
             }
             else
             {
+                Console.Clear();
                 HomeMenu();
             }
         }
@@ -61,6 +63,12 @@ namespace ConsoleBanking
         /// </summary>
         public static void MainMenu()
         {
+            AnsiConsole.Write(new Markup("[white]Welcome[/]").Centered());
+            AnsiConsole.Write(
+            new FigletText($"{UserLoggedIn.UserName}")
+           .Centered()
+           .Color(Color.Blue));
+            Console.WriteLine("\n\n");
             string title = $"Welcome {UserLoggedIn.UserName}".PadLeft(55);
             string withdraw = "Withdraw".PadLeft(50);
             string deposit = "Deposit".PadLeft(50);
@@ -72,7 +80,6 @@ namespace ConsoleBanking
             Console.SetWindowSize(100, 25);
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             var menuItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
-           .Title(title + "\n\n\n")
            .PageSize(10)
            .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
            .AddChoices(withdraw)
@@ -105,10 +112,12 @@ namespace ConsoleBanking
             }
             else if (menuItem.Contains("out"))
             {
+                Console.Clear();
                 HomeMenu();
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Thank you for banking with us...");
                 Environment.Exit(0);
             }
@@ -119,18 +128,21 @@ namespace ConsoleBanking
         /// </summary>
         public static void ReturnToMenu()
         {
-            Console.WriteLine("0. Main Menu.");
-            ConsoleKeyInfo option = Console.ReadKey();
+            Console.WriteLine("\n\n");
+            var menuItem = AnsiConsole.Prompt(new SelectionPrompt<string>()
+          .PageSize(10)
+          .MoreChoicesText("[grey](Move up and down to reveal more items)[/]")
+          .AddChoices("MainMenu")
+          .AddChoices("LogOut"));
 
-            if (option.Key == ConsoleKey.NumPad0)
+            if (menuItem.Contains("MainMenu"))
             {
                 Console.Clear();
                 MainMenu();
             }
-            else
+            else if (menuItem.Contains("LogOut"))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Wrong Input!");
                 HomeMenu();
             }
         }

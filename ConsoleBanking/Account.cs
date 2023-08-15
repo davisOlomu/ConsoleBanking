@@ -31,9 +31,7 @@ namespace ConsoleBanking
         /// </summary>
         public static void GetUserDetails()
         {
-            Designs.CenterTextNewLine("Fill in the following details.");
-            Designs.CenterTextNewLine("Press Enter Key after each field.\n\n");
-            Thread.Sleep(3000);
+            AnsiConsole.Write(new Markup("[red]Fill in the following details.\nPress Enter Key after each field.\n\n[/]").Centered());
             Console.Clear();
 
             Console.WriteLine("Personal details: \n\n");
@@ -118,7 +116,7 @@ namespace ConsoleBanking
             };
             databaseAccess.CreateTransaction(initialTransaction, _username);
             Console.Clear();
-            Designs.CenterTextNewLine("Account sucessfully created.\n\n");
+            AnsiConsole.Write(new Markup("[red]Account sucessfully created.[/]").Centered());
             Thread.Sleep(6000);
             Console.Clear();
             Menu.HomeMenu();
