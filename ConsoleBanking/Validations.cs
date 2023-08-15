@@ -2,6 +2,7 @@
 using System.Threading;
 using ConsoleBankDataAccess;
 using FluentValidation;
+using Spectre.Console;
 
 namespace ConsoleBanking
 {
@@ -21,7 +22,7 @@ namespace ConsoleBanking
             while (string.IsNullOrEmpty(firstname))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Firstname cannot be empty..");
+                AnsiConsole.Write(new Markup("[red]Firstname cannot be empty..[/]").Centered());
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Firstname: ");
@@ -39,7 +40,7 @@ namespace ConsoleBanking
             while (string.IsNullOrEmpty(lastname))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Lastname cannot be empty..");
+                AnsiConsole.Write(new Markup("[red]Lastname cannot be empty..[/]").Centered());
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Lastname: ");
@@ -59,7 +60,7 @@ namespace ConsoleBanking
             while (string.IsNullOrEmpty(email))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Email cannot be empty..");
+                AnsiConsole.Write(new Markup("[red]Email cannot be empty..[/]").Centered());
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.Write("Email: ");
@@ -80,8 +81,7 @@ namespace ConsoleBanking
                 if (!(int.TryParse(userpin, out pin)))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Invalid pin format!");
-                    Designs.CenterTextNewLine("Re-Enter Pin.");
+                    AnsiConsole.Write(new Markup("[red]Invalid pin format!\nRe-Enter Pin.[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Pin: ");
@@ -90,9 +90,7 @@ namespace ConsoleBanking
                 else if (!(pin <= 9999 && pin > 999))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Invalid Pin!");
-                    Designs.CenterTextNewLine("Pin must be below 9999 and above 999...");
-                    Designs.CenterTextNewLine("Re-Enter Pin.\n");
+                    AnsiConsole.Write(new Markup("[red]Invalid Pin!\nPin must be below 9999 and above 999...\nRe-Enter Pin.[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Pin: ");
@@ -116,7 +114,7 @@ namespace ConsoleBanking
                 if (string.IsNullOrEmpty(username))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Username cannot be empty..");
+                    AnsiConsole.Write(new Markup("[red]Username cannot be empty..[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("UserName: ");
@@ -124,8 +122,7 @@ namespace ConsoleBanking
                 }
                 else if (databaseAccess.VerifyUserName(username))
                 {
-                    Designs.CenterTextNewLine("Username already exist...");
-                    Designs.CenterTextNewLine("Re-Enter Username.");
+                    AnsiConsole.Write(new Markup("[red]Username already exist...\nRe-Enter Username.[/]").Centered());
                     Thread.Sleep(3000);
                     Console.Clear();
                     Console.Write("UserName: ");
@@ -160,7 +157,7 @@ namespace ConsoleBanking
                 if (string.IsNullOrEmpty(password))
                 {
                     Console.Clear();
-                    Console.WriteLine("Password cannot be null or empty...");
+                    AnsiConsole.Write(new Markup("[red]Password cannot be null or empty...[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Enter password: ");
@@ -169,7 +166,7 @@ namespace ConsoleBanking
                 else if (password.IndexOfAny(upperCharArray) == -1)
                 {
                     Console.Clear();
-                    Console.WriteLine("Password must contain at least one uppercase character...");
+                    AnsiConsole.Write(new Markup("[red]Password must contain at least one uppercase character...[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Enter password: ");
@@ -178,9 +175,8 @@ namespace ConsoleBanking
                 else if (password.IndexOfAny(digitCharArray) == -1)
                 {
                     Console.Clear();
-                    Console.WriteLine("Password must contain at least one digit...");
+                    AnsiConsole.Write(new Markup("[red]Password must contain at least one digit...[/]").Centered());
                     Thread.Sleep(2000);
-                    Console.Clear();
                     Console.Clear();
                     Console.Write("Enter password: ");
                     password = Console.ReadLine();
@@ -188,7 +184,7 @@ namespace ConsoleBanking
                 else if (password.IndexOfAny(specialCharArray) == -1)
                 {
                     Console.Clear();
-                    Console.WriteLine("Password must contain at least one special character...");
+                    AnsiConsole.Write(new Markup("[red]Password must contain at least one special character...[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Enter password: ");
@@ -197,9 +193,8 @@ namespace ConsoleBanking
                 else if (password.Length < 8)
                 {
                     Console.Clear();
-                    Console.WriteLine("Password must contain at least eight characters...");
+                    AnsiConsole.Write(new Markup("[red]Password must contain at least eight characters...[/]").Centered());
                     Thread.Sleep(2000);
-                    Console.Clear();
                     Console.Clear();
                     Console.Write("Enter password: ");
                     password = Console.ReadLine();
@@ -237,8 +232,7 @@ namespace ConsoleBanking
                 }
                 else
                 {
-                    Designs.CenterTextNewLine("Wrong Input!");
-                    Designs.CenterTextNewLine("Re-Select Account Type. ");
+                    AnsiConsole.Write(new Markup("[red]Wrong Input!\nRe-Select Account Type. [/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();           
                 }
@@ -259,8 +253,7 @@ namespace ConsoleBanking
                 if (!(decimal.TryParse(initialdeposit, out amount)))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Wrong Input! ");
-                    Designs.CenterTextNewLine("Re-Enter Amount ");
+                    AnsiConsole.Write(new Markup("[red]Wrong Input!\nRe-Enter Amount[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Opening amount: # ");
@@ -269,7 +262,7 @@ namespace ConsoleBanking
                 else if (!(amount >= 1000))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Initial deposit must be at least #1,000.");
+                    AnsiConsole.Write(new Markup("[red]Initial deposit must be at least #1,000.[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     Console.Write("Opening amount: # ");

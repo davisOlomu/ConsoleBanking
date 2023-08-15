@@ -10,7 +10,6 @@ namespace ConsoleBanking
     /// </summary>
     public class Login
     {
-
         private static AccountModel userLoggedIn = new AccountModel();
         private static readonly DataLayer databaseAccess = new DataLayer();
 
@@ -30,8 +29,9 @@ namespace ConsoleBanking
         /// <param name="user">sucessfully validated user</param>
         public static void VerifyUser()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Designs.CenterTextSameLine("Username: ");
+         
+            AnsiConsole.Write(new Markup("[blue]Username: [/]").Centered());
+            Console.SetCursorPosition(55, 9);
             Console.ForegroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Red;
             UserLoggedIn.UserName = Console.ReadLine();
@@ -43,16 +43,18 @@ namespace ConsoleBanking
                 if (string.IsNullOrEmpty(UserLoggedIn.UserName))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Username cannot be empty..");
+                    AnsiConsole.Write(new Markup("[red]Username cannot be empty..[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
-                    Designs.CenterTextSameLine("Username: ");
+                    AnsiConsole.Write(new Markup("[blue]Username: [/]").Centered());
+                    Console.ForegroundColor = ConsoleColor.Red;
                     UserLoggedIn.UserName = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 else if (!(databaseAccess.GetUser(UserLoggedIn, sql)))
                 {
                     Console.Clear();
-                    Designs.CenterTextNewLine("Username not found! ");
+                    AnsiConsole.Write(new Markup("[red]Username not found! [/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     VerifyUser();
@@ -62,7 +64,6 @@ namespace ConsoleBanking
                     break;
                 }
             }
-  
             string passwordLiteral = "Password: ";
             Console.SetCursorPosition((Console.WindowWidth - passwordLiteral.Length) / 2, Console.CursorTop);
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -75,11 +76,13 @@ namespace ConsoleBanking
             while (!(UserLoggedIn.UserName != null && password == UserLoggedIn.Password))
             {
                 Console.Clear();
-                Designs.CenterTextNewLine("Incorrect password!");
+                AnsiConsole.Write(new Markup("[red]Incorrect password![/]").Centered());
                 Thread.Sleep(2000);
                 Console.Clear();
-                Designs.CenterTextSameLine("Password: ");
+                AnsiConsole.Write(new Markup("[blue]Password: [/]").Centered());
+                Console.ForegroundColor = ConsoleColor.Red;
                 password = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Clear();
             }
             Menu.MainMenu();
