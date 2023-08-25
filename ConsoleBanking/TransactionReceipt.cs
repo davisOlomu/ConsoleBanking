@@ -26,7 +26,7 @@ namespace ConsoleBanking
             string sql = $"Select * From Customer Where UserName = '{UserLoggedIn.UserName}'";
             if (databaseAccess.GetUser(UserLoggedIn, sql))
             {
-                //var mark = new Markup($"[blue]{receipt.AppendLine("The details of this transaction are shown below:\n\nTransaction Notification\n")}[/]");
+                var mark = new Markup($"[blue]{receipt.AppendLine("The details of this transaction are shown below:\n\nTransaction Notification\n")}[/]");
                 receipt.AppendLine("The details of this transaction are shown below:\n\nTransaction Notification\n");
                 receipt.AppendLine($"Account Number: {UserLoggedIn.AccountNumber}\nDescription: {model.TransactionDescription}\nAmount: {model.TransactionAmount.ToString("C", CultureInfo.CurrentUICulture)}\nValue Date: {DateTime.Now.ToShortDateString()}\nTime: {DateTime.Now.ToShortTimeString()}\nStatus: {model.TransactionStatus}\nTransaction Type: {model.TransactionType}\n\n");
                 receipt.AppendLine($"The balances on this account as at {DateTime.Now} are as follows;\n");
