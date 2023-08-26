@@ -176,10 +176,11 @@ namespace ConsoleBanking
             {
                 TransactionNotifications.InProgress();        
                 var accountDetails = new Table();
-                accountDetails.Title("[blue]Account Details[/]");
+                accountDetails.Title("[blue]\tAccount Details[/]\n\n");
                 accountDetails.AddColumns("[blue]Firstname[/]", "[blue]Lastname[/]", "[blue]AccountNumber[/]", "[blue]AccountType[/]", "[blue]Email[/]", "[blue]Balance[/]", "[blue]DateCreated[/]", "[blue]TimeCreated[/]");
-                accountDetails.AddRow($"[green]{UserLoggedIn.FirstName}[/]",$"[purple]{UserLoggedIn.LastName}[/]",$"[red]{UserLoggedIn.AccountNumber}[/]",$"{UserLoggedIn.AccountType}",$"[green]{UserLoggedIn.Email}[/]",$"[red]{UserLoggedIn.Balance.ToString("C", CultureInfo.CurrentUICulture)}[/]",$"[yellow]{UserLoggedIn.DateCreated.ToShortDateString()}[/]",$"[red]{UserLoggedIn.TimeCreated.ToShortTimeString()}[/]");
-                AnsiConsole.Write(accountDetails);      
+                accountDetails.AddRow($"[green]{UserLoggedIn.FirstName}[/]",$"[purple]{UserLoggedIn.LastName}[/]",$"[red]{UserLoggedIn.AccountNumber}[/]",$"{UserLoggedIn.AccountType}",$"[green]{UserLoggedIn.Email}[/]",$"[red]N{UserLoggedIn.Balance}[/]",$"[yellow]{UserLoggedIn.DateCreated.ToShortDateString()}[/]",$"[red]{UserLoggedIn.TimeCreated.ToShortTimeString()}[/]");
+                accountDetails.Border(TableBorder.Horizontal);
+                AnsiConsole.Write(accountDetails.Centered());      
             }
             Menu.ReturnToMenu();
         }
