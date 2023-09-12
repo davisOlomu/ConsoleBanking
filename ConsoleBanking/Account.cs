@@ -99,6 +99,7 @@ namespace ConsoleBanking
             DataLayer newCustomer = new DataLayer();
             newCustomer.CreateAccount(newAccount);
         }
+
         /// <summary>
         /// All new accounts must be activated with a minimum deposit
         /// of #1000.

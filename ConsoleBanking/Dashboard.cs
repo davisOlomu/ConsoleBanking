@@ -1,5 +1,4 @@
 ﻿using System;
-using Spectre.Console;
 namespace ConsoleBanking
 {
     internal class Dashboard

@@ -9,14 +9,14 @@ namespace ConsoleBanking
     /// </summary>
     public class TransactionNotifications
     {
-        public static void Successfull()
+        public static void ReturnSuccessfull()
         {
             Console.Clear();
             AnsiConsole.Write(new Markup("[red]Transaction Successfull![/]").Centered());
             Thread.Sleep(2000);
             Console.Clear();
         }
-        public static void Unsuccessfull()
+        public static void ReturnUnsuccessfull()
         {
             Console.Clear();
             AnsiConsole.Write(new Markup("[red]Transaction Unsuccessfull![/]").Centered());

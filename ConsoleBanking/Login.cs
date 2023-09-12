@@ -64,6 +64,7 @@ namespace ConsoleBanking
                     break;
                 }
             }
+
             string passwordLiteral = "Password: ";
             Console.SetCursorPosition((Console.WindowWidth - passwordLiteral.Length) / 2, Console.CursorTop);
             Console.ForegroundColor = ConsoleColor.Blue;

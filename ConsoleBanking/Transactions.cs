@@ -1,7 +1,6 @@
 ﻿using ConsoleBankDataAccess;
 using Spectre.Console;
 using System;
-using System.Globalization;
 using System.Threading;
 using static ConsoleBanking.Login;
 
@@ -82,7 +81,7 @@ namespace ConsoleBanking
                     AnsiConsole.Write(new Markup("[red]Insufficient funds!\n[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
-                    TransactionNotifications.Unsuccessfull();
+                    TransactionNotifications.ReturnUnsuccessfull();
                     withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                     withdraw.TransactionType = TransactionType.Debit;
                 }
@@ -92,14 +91,14 @@ namespace ConsoleBanking
                     AnsiConsole.Write(new Markup("[red]Withdraw amount must be positive.\n[/]").Centered()); 
                     Thread.Sleep(2000);
                     Console.Clear();
-                    TransactionNotifications.Unsuccessfull();
+                    TransactionNotifications.ReturnUnsuccessfull();
                     withdraw.TransactionStatus = TransactionStatus.Unsucessfull;
                     withdraw.TransactionType = TransactionType.Debit;
                 }
                 else
                 {
                     TransactionNotifications.InProgress();
-                    TransactionNotifications.Successfull();
+                    TransactionNotifications.ReturnSuccessfull();
                     withdraw.TransactionStatus = TransactionStatus.Sucessfull;
                     withdraw.TransactionType = TransactionType.Debit;
                     UserLoggedIn.Balance -= amount;
@@ -147,14 +146,14 @@ namespace ConsoleBanking
                     AnsiConsole.Write(new Markup("[red]Amount of deposit must be positive.\n[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
-                    TransactionNotifications.Unsuccessfull();
+                    TransactionNotifications.ReturnUnsuccessfull();
                     deposit.TransactionStatus = TransactionStatus.Unsucessfull;
                     deposit.TransactionType = TransactionType.Credit;
                 }
                 else
                 {
                     TransactionNotifications.InProgress();
-                    TransactionNotifications.Successfull();
+                    TransactionNotifications.ReturnSuccessfull();
                     deposit.TransactionStatus = TransactionStatus.Sucessfull;
                     deposit.TransactionType = TransactionType.Credit;
                     UserLoggedIn.Balance += amount;
