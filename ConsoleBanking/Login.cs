@@ -28,8 +28,7 @@ namespace ConsoleBanking
         /// </summary>
         /// <param name="user">sucessfully validated user</param>
         public static void VerifyUser()
-        {
-         
+        {       
             AnsiConsole.Write(new Markup("[blue]Username: [/]").Centered());
             Console.SetCursorPosition(55, 9);
             Console.ForegroundColor = ConsoleColor.White;
@@ -46,7 +45,8 @@ namespace ConsoleBanking
                     AnsiConsole.Write(new Markup("[red]Username cannot be empty..[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
-                    AnsiConsole.Write(new Markup("[blue]Username: [/]").Centered());
+                    Console.SetCursorPosition(45, 0);
+                    AnsiConsole.Write(new Markup("[blue]Username: [/]"));
                     Console.ForegroundColor = ConsoleColor.Red;
                     UserLoggedIn.UserName = Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.White;
@@ -56,7 +56,7 @@ namespace ConsoleBanking
                     Console.Clear();
                     AnsiConsole.Write(new Markup("[red]Username not found! [/]").Centered());
                     Thread.Sleep(2000);
-                    Console.Clear();
+                    Console.Clear();         
                     VerifyUser();
                 }
                 else

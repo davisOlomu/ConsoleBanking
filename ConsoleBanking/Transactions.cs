@@ -64,15 +64,18 @@ namespace ConsoleBanking
                 Console.ForegroundColor = ConsoleColor.White;
                 AnsiConsole.Markup("[blue]Amount: # [/]");
                 decimal amount;
-
+                Console.ForegroundColor = ConsoleColor.Red;
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
                     Console.Clear();
-                    AnsiConsole.Write(new Markup("[red]Wrong Input!e[/]\nEnter a valid Amount").Centered()); 
+                    AnsiConsole.Write(new Markup("[red]Wrong Input!\nEnter a valid Amount[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
-                    Console.Write("Amount:# ");
+                    Console.SetCursorPosition(45, 0);
+                    AnsiConsole.Write(new Markup("[blue]Amount:# [/]"));
+                    Console.ForegroundColor = ConsoleColor.Red;
                 }
+                Console.ForegroundColor = ConsoleColor.White;
                 var withdraw = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
 
                 if (amount > UserLoggedIn.Balance)
@@ -88,7 +91,7 @@ namespace ConsoleBanking
                 else if (amount <= 0)
                 {
                     TransactionNotifications.InProgress();
-                    AnsiConsole.Write(new Markup("[red]Withdraw amount must be positive.\n[/]").Centered()); 
+                    AnsiConsole.Write(new Markup("[red]Withdraw amount must be positive.\n[/]").Centered());
                     Thread.Sleep(2000);
                     Console.Clear();
                     TransactionNotifications.ReturnUnsuccessfull();
@@ -129,14 +132,18 @@ namespace ConsoleBanking
                 Console.ForegroundColor = ConsoleColor.White;
                 AnsiConsole.Markup("[blue]Amount: # [/]");
                 decimal amount;
-
+                Console.ForegroundColor = ConsoleColor.Red;
                 while (!(decimal.TryParse(Console.ReadLine(), out amount)))
                 {
                     Console.Clear();
                     AnsiConsole.Write(new Markup("[red]Wrong Input!\nEnter a valid Amount[/]").Centered());
                     Thread.Sleep(2000);
-                    Console.Write("Description: ");
+                    Console.Clear();
+                    Console.SetCursorPosition(45, 0);            
+                    AnsiConsole.Write(new Markup("[blue]Amount:# [/]"));
+                    Console.ForegroundColor = ConsoleColor.Red;
                 }
+                Console.ForegroundColor = ConsoleColor.White;
                 var deposit = new TransactionModel { TransactionDescription = description, TransactionAmount = amount };
 
                 if (amount <= 0)
@@ -170,16 +177,16 @@ namespace ConsoleBanking
         /// </summary>
         /// <param name="user">Current user logged in</param>
         public static void ViewAccountDetails()
-        {       
+        {
             if (databaseAccess.GetUser(UserLoggedIn, sqlStatement))
             {
-                TransactionNotifications.InProgress();        
+                TransactionNotifications.InProgress();
                 var accountDetails = new Table();
                 accountDetails.Title("[blue]\tAccount Details[/]\n\n");
                 accountDetails.AddColumns("[blue]Firstname[/]", "[blue]Lastname[/]", "[blue]AccountNumber[/]", "[blue]AccountType[/]", "[blue]Email[/]", "[blue]Balance[/]", "[blue]DateCreated[/]", "[blue]TimeCreated[/]");
-                accountDetails.AddRow($"[green]{UserLoggedIn.FirstName}[/]",$"[purple]{UserLoggedIn.LastName}[/]",$"[red]{UserLoggedIn.AccountNumber}[/]",$"{UserLoggedIn.AccountType}",$"[green]{UserLoggedIn.Email}[/]",$"[red]N{UserLoggedIn.Balance}[/]",$"[yellow]{UserLoggedIn.DateCreated.ToShortDateString()}[/]",$"[red]{UserLoggedIn.TimeCreated.ToShortTimeString()}[/]");
+                accountDetails.AddRow($"[green]{UserLoggedIn.FirstName}[/]", $"[purple]{UserLoggedIn.LastName}[/]", $"[red]{UserLoggedIn.AccountNumber}[/]", $"{UserLoggedIn.AccountType}", $"[green]{UserLoggedIn.Email}[/]", $"[red]N{UserLoggedIn.Balance}[/]", $"[yellow]{UserLoggedIn.DateCreated.ToShortDateString()}[/]", $"[red]{UserLoggedIn.TimeCreated.ToShortTimeString()}[/]");
                 accountDetails.Border(TableBorder.Horizontal);
-                AnsiConsole.Write(accountDetails.Centered());      
+                AnsiConsole.Write(accountDetails.Centered());
             }
             Menu.ReturnToMenu();
         }
@@ -192,7 +199,7 @@ namespace ConsoleBanking
         {
             TransactionNotifications.InProgress();
             databaseAccess.GetTransactionHistory(UserLoggedIn.UserName);
-            Menu.ReturnToMenu();     
+            Menu.ReturnToMenu();
         }
     }
 }

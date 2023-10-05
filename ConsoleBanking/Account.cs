@@ -12,7 +12,7 @@ namespace ConsoleBanking
     internal class Account
     {
         /// <summary>
-        /// 
+        /// Basic account information.
         /// </summary>
         private static string _firstname;
         private static string _lastname;
@@ -23,6 +23,10 @@ namespace ConsoleBanking
         private static AccountType _acctype;
         private static decimal _initialDeposit;
         private static readonly Random _accountNumberSeed = new Random();
+
+        /// <summary>
+        /// Data Access.
+        /// </summary>
         private static readonly DataLayer databaseAccess = new DataLayer();
 
         /// <summary>
