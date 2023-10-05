@@ -55,8 +55,6 @@ namespace ConsoleBanking
         /// <returns>A valid email URL</returns>
         public static string ValidateEmail( string email)
         {
-            //RuleFor(email => email.Email).NotNull();
-            //RuleFor(email => email.Email).EmailAddress();
             while (string.IsNullOrEmpty(email))
             {
                 Console.Clear();
